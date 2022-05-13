@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import parking.application.classes.Add;
-import parking.application.classes.Check;
+import parking.application.classes.Checker;
 import static parking.application.classes.Connectsql.setConnection;
 import parking.application.classes.Delete;
-import parking.application.classes.Get;
+import parking.application.classes.Geter;
 
 
 public class AdminAdduser extends javax.swing.JFrame {
@@ -20,8 +20,8 @@ public class AdminAdduser extends javax.swing.JFrame {
         initComponents();
        
     }
-Check c =new Check();
-Get g=new Get();
+Checker c =new Checker();
+Geter g=new Geter();
 Add a=new Add();
 Delete d=new Delete();
  

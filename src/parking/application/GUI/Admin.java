@@ -1,7 +1,7 @@
 package parking.application.GUI;
 
 import parking.application.classes.Add;
-import parking.application.classes.Check;
+import parking.application.classes.Checker;
 import parking.application.classes.Delete;
 
 /**
@@ -9,7 +9,7 @@ import parking.application.classes.Delete;
  * @author Fady Malak
  */
 public class Admin extends javax.swing.JFrame {
-    Check c=new Check();
+    Checker c=new Checker();
     Add a=new Add();
     Delete d=new Delete();
    // entryStation x=new entryStation();
