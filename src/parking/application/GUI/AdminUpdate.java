@@ -2,7 +2,7 @@ package parking.application.GUI;
 
 import java.awt.Component;
 import javax.swing.JOptionPane;
-import parking.application.classes.Check;
+import parking.application.classes.Checker;
 import parking.application.classes.Update;
 
 public class AdminUpdate extends javax.swing.JFrame {
@@ -12,7 +12,7 @@ public class AdminUpdate extends javax.swing.JFrame {
         jPanel2.setVisible(false);
 
     }
-Check c= new Check();
+Checker c= new Checker();
 Update u= new Update();
 
     @SuppressWarnings("unchecked")
@@ -229,6 +229,7 @@ Update u= new Update();
             String i=jTextField1.getText();
              int id = Integer.parseInt(i);
             u.updatePlate(pl,id);
+            System.out.println("Done");
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "Plate Number Updated Successfully");
         }
@@ -240,6 +241,7 @@ Update u= new Update();
              int id = Integer.parseInt(i);
             if (z==1)
             {
+                
                 u.updateSpot(id,s);
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "Spot Number Updated Successfully");

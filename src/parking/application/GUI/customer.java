@@ -7,16 +7,16 @@ import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import parking.application.classes.Add;
-import parking.application.classes.Check;
+import parking.application.classes.Checker;
 import static parking.application.classes.Connectsql.setConnection;
-import parking.application.classes.Get;
+import parking.application.classes.Geter;
 
 public class customer extends javax.swing.JFrame {
 
     private Component frame;
     private Component fra;
-    Check c = new Check();
-    Get g=new Get();
+    Checker c = new Checker();
+    Geter g=new Geter();
     Add a=new Add();
     int z;
 

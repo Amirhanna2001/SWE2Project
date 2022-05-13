@@ -149,14 +149,14 @@ public class AdminRemoveuser extends javax.swing.JFrame {
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "User Removed Successfully");
         }
-        else if (index==1)
+        /*else if (index==1)
         {
             String pl=text;
             d.deleteRow(pl);
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "User Removed Successfully");
-        }
-        else if (index==2)
+        }*/
+        else if (index==1)
         {
             int s=Integer.parseInt(text);
             d.deleteRows(s);

@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import parking.application.classes.Add;
-import parking.application.classes.Get;
+import parking.application.classes.Geter;
 import parking.application.classes.Payment;
 
 /**
@@ -16,7 +16,7 @@ import parking.application.classes.Payment;
 public class exitSation extends javax.swing.JFrame {
     
     Add a= new Add();
-    Get g= new Get();
+    Geter g= new Geter();
     Payment p = new Payment();
     public exitSation() {
         initComponents();
@@ -211,7 +211,7 @@ public class exitSation extends javax.swing.JFrame {
         System.out.println(id);
         a.setEndTime("parkedcar", id);
         a.setTotalTime("parkedcar", id);
-        Time t=g.getTotalTime("parkedcar", id);
+        Time t=g.getTotalTime(id);
         String time=t.toString();
         jTextField2.setText(time);
         

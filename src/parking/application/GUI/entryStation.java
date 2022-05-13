@@ -2,22 +2,18 @@ package parking.application.GUI;
 
 import java.awt.*;
 import javax.swing.JOptionPane;
-import parking.application.classes.Check;
+import parking.application.classes.Checker;
 import parking.application.classes.Delete;
-import parking.application.classes.Get;
+import parking.application.classes.Geter;
 
-/**
- *
- * @author Fady Malak
- */
 
 
 public class entryStation extends javax.swing.JFrame {
 
     Delete d= new Delete();
-    Get g= new Get();
+    Geter g= new Geter();
     private Component frame;
-    Check s= new Check();
+    Checker s= new Checker();
     int x=0;
         
     public entryStation() {
