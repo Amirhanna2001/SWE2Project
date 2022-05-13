@@ -28,18 +28,16 @@ public class Checker {
         return z;
     }
     
-    public int checkPlate(String p) {
+    public boolean checkPlate(String p) {
         String x = null;
-        int z = 0;
+        boolean z =false;
         try {
            ResultSet pc = e.executeSelectQueryWithoutCondition("platenum","parkedcar");
             while (pc.next()) {
                 x = pc.getString("platenum");
                 if (x.equals(p)) {
-                    z = 1;
+                    z = true;
                     break;
-                } else {
-                    z = 0;
                 }
             }
             pc.close();
@@ -71,7 +69,7 @@ public class Checker {
         return z;
     }
 
-    public int freeSpots() {
+    public int calculateFreeSpots() {
         int k = 0;
         try {
             ResultSet rs = e.executeSelectQueryWithoutCondition("*","freespots");

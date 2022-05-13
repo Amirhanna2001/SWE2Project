@@ -2,35 +2,37 @@ package parking.application.GUI;
 
 import java.awt.*;
 import javax.swing.JOptionPane;
+import parking.application.classes.Add;
 import parking.application.classes.Checker;
 import parking.application.classes.Delete;
 import parking.application.classes.Geter;
+import parking.application.classes.SQLUpdateQuerys;
 
 
 
-public class entryStation extends javax.swing.JFrame {
+public class EntryStation extends javax.swing.JFrame {
 
     Delete d= new Delete();
     Geter g= new Geter();
+    CustomerModule c=new CustomerModule();
     private Component frame;
+    Add a=new Add();
     Checker s= new Checker();
     int x=0;
+        SQLUpdateQuerys sql=new SQLUpdateQuerys();
+
         
-    public entryStation() {
+    public EntryStation() {
         initComponents();
 
-        int y = s.freeSpots();
-        if (y == 0) {
+        int numberOfFreeSpots = s.calculateFreeSpots();
+        if (numberOfFreeSpots == 0) {
             jTextField3.setText("0");
             jButton1.setEnabled(false);
         } else {
-            String x;
-            x = s.freeSpots() + " Spot";
-            jTextField3.setText(x);
-            int z = g.getSpot("freespots");
-            String zs = z + "";
-
-            jTextField1.setText(zs);
+            jTextField3.setText(numberOfFreeSpots + " Spot");
+            int z = g.getAppropriateSpot("freespots");
+            jTextField1.setText(z+"");
         }
 
     }
@@ -164,7 +166,7 @@ public class entryStation extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        new f1().setVisible(true);
+        new HomePage().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
 
@@ -172,8 +174,20 @@ public class entryStation extends javax.swing.JFrame {
         d.deleteSpot();
         int h = g.getID("parkedcar");
         h=h-1;
+      //  String p=c.getPlateNumber();
+        String p=CustomerModule.x.getText();
+       // c.x.getText();
+        System.out.println(p+"ggggggg");
+        try {
+            int i = g.getID("parkedcar");
+            int s = g.getAppropriateSpot("freespots");
+            sql.executeInsertQuery("parkedcar (id,spot,platenum)",i +   ","   + s +   ",'"   + p+"'");
+            a.setStartTime("parkedcar", i);
+        } catch (Exception e) {
+            System.out.println("ErrorEntry");
+        }
         JOptionPane.showMessageDialog(frame, "Book has been succesfull\nyour id: " + h);
-        new f1().setVisible(true);
+        new HomePage().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -181,7 +195,7 @@ public class entryStation extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int h = (g.getID("parkedcar"))-1;
         d.deleteRow(h);
-        new customer().setVisible(true);
+        new CustomerModule().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -195,7 +209,7 @@ public class entryStation extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new entryStation().setVisible(true);
+                new EntryStation().setVisible(true);
             }
         });
     }

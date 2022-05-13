@@ -16,14 +16,5 @@ public class SQLDeleteQuerys {
             System.out.println(ex);
         }
     }
-    public void  executeDeleteQueryLimitaion(String tableName){
-        try {
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            st.executeUpdate("DELETE FROM "+tableName+" limit 1 ");
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-    }
     
 }

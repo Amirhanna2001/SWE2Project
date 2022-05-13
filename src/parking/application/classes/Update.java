@@ -1,17 +1,14 @@
 package parking.application.classes;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Update {
-    
     SQLSelectQuerys e = new SQLSelectQuerys();
     SQLUpdateQuerys i = new SQLUpdateQuerys();
     SQLDeleteQuerys d = new SQLDeleteQuerys();
-    
     public void updateSpot(int id, int spot) {
         try {
-            ResultSet rs = e.executeSelectQueryWithCondition("spot","parkedcar", "id ="+id);
+            ResultSet rs = e.executeSelectQueryWithCondition("spot","parkedcar", id);
             int s = rs.getInt("spot");
             
             i.executeInsertQuery("freespots",s+"");

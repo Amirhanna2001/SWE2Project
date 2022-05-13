@@ -7,42 +7,45 @@ import java.sql.Statement;
 import static parking.application.classes.Connectsql.setConnection;
 
 public class SQLSelectQuerys {
+    
            
     public ResultSet executeSelectQueryWithoutCondition(String colnomName, String tableName){
-            ResultSet rs = null;
+            ResultSet resultSet = null;
             try{
-                Connection con = setConnection();
-                Statement st = con.createStatement();
-                rs = st.executeQuery("SELECT "+colnomName+" FROM "+tableName);
-            }catch (SQLException e){
-                System.out.println(e.getMessage());
+                Connection connection = setConnection();
+                Statement statement = connection.createStatement();
+                resultSet = statement.executeQuery("SELECT "+colnomName+" FROM "+tableName);
+            }catch (SQLException execption){
+                System.out.println(execption.getMessage());
             }
-            return rs;    
+            return resultSet;    
+
         }
 
-    public ResultSet executeSelectQueryWithCondition(String colnomName, String tableName, String condition){
-        ResultSet rs = null;
-        try{
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            rs = st.executeQuery("SELECT "+colnomName+" FROM "+tableName +" WHERE " +condition);
-            rs.next();
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
+    public ResultSet executeSelectQueryWithCondition(String colnomName, String tableName, int IDNumber){
+            ResultSet resultSet = null;
+            try{
+                Connection connection = setConnection();
+                Statement statement = connection.createStatement();
+                resultSet = statement.executeQuery("SELECT "+colnomName+" FROM "+tableName +" WHERE id=" +IDNumber);
+                resultSet.next();
+            }catch (SQLException execption){
+                System.out.println(execption.getMessage());
+            }
+            return resultSet;    
         }
-        return rs;    
-    }
 
     public ResultSet executeSelectQueryLimitaion(String tableName){
-        ResultSet rs = null;
-        try{
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            rs = st.executeQuery("SELECT * FROM "+tableName + " limit 1");
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
-        }
-        return rs;    
-    }
+            ResultSet resultSet = null;
+            try{
+                Connection connection = setConnection();
+                Statement statement = connection.createStatement();
+                resultSet = statement.executeQuery("SELECT * FROM "+tableName + " limit 1");
+            }catch (SQLException execption){
+                System.out.println(execption.getMessage());
+            }
+            return resultSet;    
 
-}
+        }
+
+    }
