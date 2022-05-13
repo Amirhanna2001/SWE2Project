@@ -3,15 +3,24 @@ package parking.application.classes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Geter {
 
     SQLSelectQuerys e = new SQLSelectQuerys();
-    
+    public String GetCurrentTime() {
+        //calling function
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        String time = dateFormat.format(date);
+        return time;
+    }
     public Time getTotalTime( int id) {   
         Time totalTime = null;
         try {
-            ResultSet rs = e.executeSelectQueryWithCondition("totaltime", "parkedcar", "id ="+id);
+            ResultSet rs = e.executeSelectQueryWithCondition("totaltime", "parkedcar", id);
             totalTime = rs.getTime("totaltime");
             rs.close();
             
@@ -21,7 +30,7 @@ public class Geter {
         return totalTime;
     }
   
-    public int getSpot(String tableName) {
+    public int getAppropriateSpot(String tableName) {
         int x = 0;
         try {
             ResultSet pc = e.executeSelectQueryLimitaion(tableName);

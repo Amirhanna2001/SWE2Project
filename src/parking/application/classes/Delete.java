@@ -1,7 +1,10 @@
 package parking.application.classes;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import static parking.application.classes.Connectsql.setConnection;
 
 public class Delete {
       
@@ -19,6 +22,7 @@ public class Delete {
                     max = s;
                 }
             }
+            
             d.executeDeleteQuery("freespots", "spot = " + max);
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -27,18 +31,48 @@ public class Delete {
     
     public void deleteSpot() {
         try {
-            d.executeDeleteQueryLimitaion("freespots");
-        } catch (Exception ex) {
+            Connection con = setConnection();
+            Statement st = con.createStatement();
+
+            st.executeUpdate("DELETE FROM freespots limit 1 ");
+            
+            st.close();
+            con.close();
+        } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
 
     public void deleteRow(int id) {
         try {
-            ResultSet rs = e.executeSelectQueryWithCondition("spot", "parkedcar", "id ="+id);
+            
+            ResultSet rs = e.executeSelectQueryWithCondition("spot", "parkedcar", id);
             int ss = rs.getInt("spot");
+            
             i.executeInsertQuery("freespots", ss+"");
             d.executeDeleteQuery("parkedcar","id = "+id);
+           
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+    }
+
+    public void deleteRow(String p) {
+        try {
+            Connection con = setConnection();
+            Statement st = con.createStatement();
+            
+            ResultSet rs = st.executeQuery("SELECT spot from parkedcar where platenum='" + p + "'");
+            rs.next();
+            int ss = rs.getInt("spot");
+            
+            i.executeInsertQuery("freespots", ss+"");
+            
+            st.executeUpdate("DELETE FROM parkedcar WHERE platenum='" + p + "'");
+            
+            //d.executeDeleteQuery("parkedcar", "platenum = " +p);
+            st.close();
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -46,8 +80,10 @@ public class Delete {
 
     public void deleteRows(int s) {
         try {
+          
             i.executeInsertQuery("freespots", s+"");    
             d.executeDeleteQuery("parkedcar", "spot = "+s);
+        
         } catch (Exception ex) {
             System.out.println(ex);
         }

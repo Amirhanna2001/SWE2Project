@@ -29,6 +29,7 @@ public class Add {
         int s, max1 = 0, max2 = 0;
         try {
             ResultSet rs = e.executeSelectQueryWithoutCondition("spot", "parkedcar");
+            
             while (rs.next()) {
                 s = rs.getInt("spot");
                 if (max1 < s) {
@@ -92,7 +93,7 @@ public class Add {
             //i.executeUpdateQuerys(TableName + " SET `totaltime`" ,"(SELECT TIMEDIFF(endtime,starttime))", id);
             st.close();
             con.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
 
