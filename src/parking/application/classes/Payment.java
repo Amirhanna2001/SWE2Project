@@ -1,8 +1,5 @@
 package parking.application.classes;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
 import static parking.application.classes.SQLUpdateQuerys.executeUpdateQuerys;
 
 public class Payment {
@@ -17,30 +14,5 @@ public class Payment {
             System.out.println(ex);
         }
     }
-
-    public void pay(int id) throws SQLException {
-        int spot = 0;
-        String p = null;
-        Time st = null, et = null, tt = null;
-        float payment = (float) 0.0;
-//            ResultSet rs = e.executeSelectQueryWithCondition("*","parkedcar" , "id ="+id);
-//            
-//            spot = rs.getInt("spot");
-//            p = rs.getString("platenum");
-//            payment = rs.getFloat("payment");
-//            st = rs.getTime("starttime");
-//            et = rs.getTime("endtime");
-//            tt = rs.getTime("totalTime");
-//            
-//            in.executeInsertQuery("totalcars",id + "," + spot + ",'" + st + "','" + et + "','" + tt + "','" + p + "','" + payment + "'");
-//            
-//            ResultSet hu = e.executeSelectQueryWithCondition("spot","parkedcar" , "id ="+id);
-//            int s = hu.getInt("spot");
-//            
-//            in.executeInsertQuery("freespots", s+"" );
-//            
-//            d.executeDeleteQuery("parkedcar", "id =" + id);
-    }
-
 
 }

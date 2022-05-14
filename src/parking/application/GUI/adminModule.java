@@ -1,10 +1,7 @@
 package parking.application.GUI;
 
 import Model.Admin;
-import parking.application.classes.Add;
-import parking.application.classes.Checker;
-import parking.application.classes.Delete;
-
+import Model.TimeManagment;
 /**
  *
  * @author Fady Malak
@@ -12,7 +9,6 @@ import parking.application.classes.Delete;
 public class AdminModule extends javax.swing.JFrame {
     Admin admin=new Admin();
     int freeSpots,busySpots,totalSpots;
-   // entryStation x=new entryStation();
     public AdminModule() {
         initComponents();
         

@@ -1,25 +1,20 @@
 package parking.application.GUI;
 
-import java.sql.Statement;
-import java.awt.Component;
-import java.util.*;
-import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import parking.application.classes.Add;
-import parking.application.classes.Checker;
-import static parking.application.classes.Connectsql.setConnection;
+import Model.Customer;
+import Model.TimeManagment;
 import parking.application.classes.Geter;
 import parking.application.classes.SQLUpdateQuerys;
+import static Model.TimeManagment.GetCurrentTime;
 
 public class CustomerModule extends javax.swing.JFrame {
 
-    Checker c = new Checker();
+
     Geter g=new Geter();
-    Add a=new Add();
-    String plateNumber;
+    TimeManagment a=new TimeManagment();
+    public static String plateNumber;
     SQLUpdateQuerys sql=new SQLUpdateQuerys();
     boolean isPlateNumberExist;
+    Customer customer=new Customer();
 
 
     public CustomerModule() {
@@ -218,20 +213,23 @@ public class CustomerModule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         plateNumber = x.getText();
-        isPlateNumberExist = c.checkPlate(plateNumber);
+
+       setPlateNumber();
+        isPlateNumberExist = customer.isExistPlateNumber(plateNumber);
         ModificationState(isPlateNumberExist);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public String getPlateNumber(){
-        return x.getText();
-    } 
-
+    public void setPlateNumber(){
+        plateNumber = x.getText();
+    }
+    public static String getPlateNumber() {
+        return plateNumber;
+    }
     private void ModificationState(boolean isExist) {
         
         entry.setEnabled(!isExist);
         exit.setEnabled(isExist);
-        String time = g.GetCurrentTime();
+        String time = GetCurrentTime();
         jTextField3.setText(time);
     }
     public void jButtonAction(java.awt.event.ActionEvent evt) {
@@ -254,17 +252,6 @@ public class CustomerModule extends javax.swing.JFrame {
     }//GEN-LAST:event_exitActionPerformed
 
     private void entryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entryActionPerformed
-       // jButton1ActionPerformed(evt);
-//        String p = x.getText();
-//        try {
-//            int i = g.getID("parkedcar");
-//            int s = g.getSpot("freespots");
-//            sql.executeInsertQuery("parkedcar (id,spot,platenum)",i +   ","   + s +   ",'"   + p+"'");
-//            a.setStartTime("parkedcar", i);
-//        } catch (Exception e) {
-//            System.out.println("ErrorEntry");
-//        }
-
         new EntryStation().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_entryActionPerformed

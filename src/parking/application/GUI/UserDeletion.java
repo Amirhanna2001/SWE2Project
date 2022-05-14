@@ -1,9 +1,12 @@
 package parking.application.GUI;
 
 import Model.Admin;
+import Model.Customer;
 import java.awt.Component;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import parking.application.classes.Delete;
 
 
 public class UserDeletion extends javax.swing.JFrame {
@@ -12,9 +15,8 @@ public class UserDeletion extends javax.swing.JFrame {
         initComponents();
 
     }
-    Delete d=new Delete();
     Admin admin =new Admin();
-
+    Customer customer=new Customer();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -146,10 +148,14 @@ public class UserDeletion extends javax.swing.JFrame {
         
         if(index==0)
         {
-            int i=Integer.parseInt(text);
-            d.deleteRow(i);
-            Component frame = null;
-            JOptionPane.showMessageDialog(frame, "User Removed Successfully");
+            try {
+                int id=Integer.parseInt(text);
+                customer.deleteUSerDataById(id);
+                Component frame = null;
+                JOptionPane.showMessageDialog(frame, "User Removed Successfully");
+            } catch (SQLException ex) {
+                Logger.getLogger(UserDeletion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if (index==1)
         {

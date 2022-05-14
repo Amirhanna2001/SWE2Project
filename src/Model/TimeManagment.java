@@ -1,29 +1,37 @@
-package parking.application.classes;
+package Model;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static parking.application.classes.Connectsql.setConnection;
+import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithCondition;
 import static parking.application.classes.SQLUpdateQuerys.executeUpdateQuerys;
 
-public class Add {
-    SQLSelectQuerys e = new SQLSelectQuerys();
-    SQLUpdateQuerys i = new SQLUpdateQuerys();
-    
-    public static int maximumSpot(ResultSet rs) throws SQLException {
-        int s;
-        int max = 0;
-        while (rs.next()) {
-            s = rs.getInt("spot");
-            if (max < s) {
-                max = s;
-            }
+public class TimeManagment {
+
+    public static String GetCurrentTime() {
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        String time = dateFormat.format(date);
+        return time;
+    }
+
+    public static Time getTotalTime(int id) {
+        Time totalTime = null;
+        try {
+            ResultSet rs = executeSelectQueryWithCondition("totaltime", "parkedcar", "id =" + id);
+            totalTime = rs.getTime("totaltime");
+            rs.close();
+
+        } catch (SQLException exceptionError) {
+            System.out.println(exceptionError);
         }
-        return max;
+        return totalTime;
     }
 
     public static void setStartTime(String TableName, long id) {

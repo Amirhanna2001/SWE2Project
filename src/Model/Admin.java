@@ -5,14 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
-import static parking.application.classes.Add.maximumSpot;
 import static parking.application.classes.Connectsql.setConnection;
 import static parking.application.classes.SQLDeleteQuerys.*;
 import static parking.application.classes.SQLSelectQuerys.*;
 import static parking.application.classes.SQLUpdateQuerys.*;
 
 
-public class Admin {
+public class Admin extends Car {
     
     public int calculateFreeSpots() {
         int k = 0;

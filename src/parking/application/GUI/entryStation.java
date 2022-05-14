@@ -1,11 +1,12 @@
 package parking.application.GUI;
 
 import Model.Admin;
+import Model.Customer;
 import java.awt.*;
 import javax.swing.JOptionPane;
-import parking.application.classes.Add;
-import parking.application.classes.Checker;
-import parking.application.classes.Delete;
+import static parking.application.GUI.CustomerModule.*;
+import Model.TimeManagment;
+import static Model.TimeManagment.setStartTime;
 import parking.application.classes.Geter;
 import parking.application.classes.SQLUpdateQuerys;
 
@@ -13,11 +14,11 @@ import parking.application.classes.SQLUpdateQuerys;
 
 public class EntryStation extends javax.swing.JFrame {
 
-    Delete d= new Delete();
     Geter g= new Geter();
     CustomerModule c=new CustomerModule();
     private Component frame;
-    Add a=new Add();
+    TimeManagment a=new TimeManagment();
+    Customer cust = new Customer();
     Admin admin = new Admin();
     int x=0;
         SQLUpdateQuerys sql=new SQLUpdateQuerys();
@@ -32,7 +33,7 @@ public class EntryStation extends javax.swing.JFrame {
             jButton1.setEnabled(false);
         } else {
             jTextField3.setText(numberOfFreeSpots + " Spot");
-            int z = g.getAppropriateSpot("freespots");
+            int z = g.getRightSpot();
             jTextField1.setText(z+"");
         }
 
@@ -129,7 +130,7 @@ public class EntryStation extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                             .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,14 +156,14 @@ public class EntryStation extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setSize(new java.awt.Dimension(364, 304));
+        setSize(new java.awt.Dimension(363, 295));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -170,32 +171,21 @@ public class EntryStation extends javax.swing.JFrame {
         new HomePage().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
-
+//    public String getPlateNumber() {
+//        return PlateNumber;
+//    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        int h = g.getID("parkedcar");
-      //  String p=c.getPlateNumber();
-        String p=CustomerModule.x.getText();
-       // c.x.getText();
-        System.out.println(p+"ggggggg");
-        try {
-            int i = g.getID("parkedcar");
-            int s = g.getAppropriateSpot("freespots");
-            d.deleteFirstFreeSpot();
-            sql.executeInsertQuery("parkedcar (id,spot,platenum)",i +   ","   + s +   ",'"   + p+"'");
-            a.setStartTime("parkedcar", i);
-        } catch (Exception e) {
-            System.out.println("ErrorEntry");
-        }
-        JOptionPane.showMessageDialog(frame, "Book has been succesfull\nyour id: " + h);
+        int id=Geter.getID();
+        String p=getPlateNumber();
+        cust.bookASpot(p);
+        cust.deleteFirstFreeSpot();
+        JOptionPane.showMessageDialog(frame, "Book has been succesfull\nyour id: " + id);
         new HomePage().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int h = (g.getID("parkedcar"))-1;
-        d.deleteRow(h);
         new CustomerModule().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed

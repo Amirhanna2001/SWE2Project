@@ -1,9 +1,9 @@
 package parking.application.GUI;
 
 import Model.Admin;
+import Model.Customer;
 import java.awt.Component;
 import javax.swing.JOptionPane;
-import parking.application.classes.Checker;
 
 public class UserModification extends javax.swing.JFrame {
 
@@ -12,8 +12,8 @@ public class UserModification extends javax.swing.JFrame {
         jPanel2.setVisible(false);
 
     }
-Checker c= new Checker();
 Admin admin = new Admin();
+Customer customer = new Customer();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -192,8 +192,8 @@ Admin admin = new Admin();
             JOptionPane.showMessageDialog(frame, "Invalid ID");
         } else {
             int id = Integer.parseInt(i);
-            int z = c.checkId(id);
-            if (z == 1) {
+            boolean z = customer.isExist(id, "id", "parkedcar");
+            if (z == true) {
                 jPanel2.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid ID");
@@ -236,12 +236,11 @@ Admin admin = new Admin();
         else if (index==1)
         {
             int s=Integer.parseInt(text);
-            int z=c.checkFspot(s);
+            boolean z=customer.isExist(s, "spot", "freespots");
             String i=jTextField1.getText();
              int id = Integer.parseInt(i);
-            if (z==1)
+            if (z==true)
             {
-                
                 admin.updateSpotNumberByID(id,s);
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "Spot Number Updated Successfully");

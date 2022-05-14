@@ -6,37 +6,18 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import static parking.application.classes.SQLSelectQuerys.executeSelectQueryLimitaion;
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithCondition;
+import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithoutCondition;
 
 public class Geter {
 
     SQLSelectQuerys e = new SQLSelectQuerys();
 
-    public String GetCurrentTime() {
-        //calling function
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        String time = dateFormat.format(date);
-        return time;
-    }
-
-    public static Time getTotalTime(int id) {
-        Time totalTime = null;
-        try {
-            ResultSet rs = executeSelectQueryWithCondition("totaltime", "parkedcar", "id =" + id);
-            totalTime = rs.getTime("totaltime");
-            rs.close();
-
-        } catch (SQLException exceptionError) {
-            System.out.println(exceptionError);
-        }
-        return totalTime;
-    }
-
-    public int getAppropriateSpot(String tableName) {
+    public static int getRightSpot() {
         int x = 0;
         try {
-            ResultSet pc = e.executeSelectQueryLimitaion(tableName);
+            ResultSet pc = executeSelectQueryLimitaion("freespots");
             while (pc.next()) {
                 x = pc.getInt("spot");
             }
@@ -48,11 +29,11 @@ public class Geter {
         return x;
     }
 
-    public int getID(String TableName) {
+    public static int getID () {
         int k = 2000;
         int i = 0;
         try {
-            ResultSet rs = e.executeSelectQueryWithoutCondition("id", TableName);
+            ResultSet rs = executeSelectQueryWithoutCondition("id", "parkedcar");
             while (rs.next()) {
                 i = rs.getInt("id");
                 k++;

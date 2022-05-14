@@ -7,11 +7,12 @@ import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import parking.application.classes.Add;
-import static parking.application.classes.Add.setEndTime;
-import static parking.application.classes.Add.setTotalTime;
+import Model.TimeManagment;
+import static Model.TimeManagment.setEndTime;
+import static Model.TimeManagment.setTotalTime;
 import parking.application.classes.Geter;
 import parking.application.classes.Payment;
+import static Model.TimeManagment.getTotalTime;
 
 /**
  *
@@ -19,7 +20,7 @@ import parking.application.classes.Payment;
  */
 public class ExitStation extends javax.swing.JFrame {
     
-    Add a= new Add();
+    TimeManagment a= new TimeManagment();
     Geter g= new Geter();
     Payment p = new Payment();
     Customer cust = new Customer();
@@ -217,7 +218,7 @@ public class ExitStation extends javax.swing.JFrame {
         setEndTime("parkedcar", id);
         setTotalTime("parkedcar", id);
         float payment=cust.calculatePayment(id);
-        Time t=g.getTotalTime(id);
+        Time t=getTotalTime(id);
         String time=t.toString();
         jTextField2.setText(time);        
         jTextPane1.setText(payment+"$");
@@ -232,6 +233,9 @@ public class ExitStation extends javax.swing.JFrame {
         int id = Integer.parseInt(x);
         try {
             cust.PayInExitStation(id);
+            cust.translateDataToTotalCar(id);
+            cust.deleteUSerDataById(id);
+            
         } catch (SQLException ex) {
             Logger.getLogger(ExitStation.class.getName()).log(Level.SEVERE, null, ex);
         }
