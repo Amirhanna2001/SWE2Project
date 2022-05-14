@@ -13,7 +13,7 @@ public class Connectsql {
             String username = "root";
             String password = "";
             con = DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Not Connected");
         }
         return con;

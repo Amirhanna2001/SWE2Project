@@ -1,6 +1,7 @@
 package parking.application.classes;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithoutCondition;
 
 public class Checker {
     
@@ -10,9 +11,9 @@ public class Checker {
         int i = 0;
         int z = 0;
         try {
-           ResultSet pc = e.executeSelectQueryWithoutCondition("spot","freespots");
+            ResultSet pc = e.executeSelectQueryWithoutCondition("spot", "freespots");
             while (pc.next()) {
-                i = pc.getInt("spot"); 
+                i = pc.getInt("spot");
                 System.out.println(i);
                 if (i == s) {
                     z = 1;
@@ -27,17 +28,19 @@ public class Checker {
         }
         return z;
     }
-    
+
     public boolean checkPlate(String p) {
-        String x = null;
-        boolean z =false;
+        String x;
+        boolean z = false;
         try {
-           ResultSet pc = e.executeSelectQueryWithoutCondition("platenum","parkedcar");
+            ResultSet pc = executeSelectQueryWithoutCondition("platenum", "parkedcar");
             while (pc.next()) {
                 x = pc.getString("platenum");
                 if (x.equals(p)) {
                     z = true;
                     break;
+                } else {
+                    z = false;
                 }
             }
             pc.close();
@@ -51,7 +54,7 @@ public class Checker {
         int i = 0;
         int z = 0;
         try {
-             ResultSet pc = e.executeSelectQueryWithoutCondition("id","parkedcar");
+            ResultSet pc = e.executeSelectQueryWithoutCondition("id", "parkedcar");
             while (pc.next()) {
                 i = pc.getInt("id");
                 System.out.println(i);
@@ -67,34 +70,6 @@ public class Checker {
             System.out.println(ex);
         }
         return z;
-    }
-
-    public int calculateFreeSpots() {
-        int k = 0;
-        try {
-            ResultSet rs = e.executeSelectQueryWithoutCondition("*","freespots");
-            while (rs.next()) {
-                k++;
-            }
-            rs.close();
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return k;
-    }
-
-    public int busySpots() {
-        int k = 0;
-        try {
-            ResultSet rs = e.executeSelectQueryWithoutCondition("id","parkedcar");
-            while (rs.next()) {
-                k++;
-            }
-            rs.close();
-        }catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return k;
     }
 
 }

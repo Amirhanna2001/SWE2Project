@@ -6,10 +6,12 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithCondition;
 
 public class Geter {
 
     SQLSelectQuerys e = new SQLSelectQuerys();
+
     public String GetCurrentTime() {
         //calling function
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -17,19 +19,20 @@ public class Geter {
         String time = dateFormat.format(date);
         return time;
     }
-    public Time getTotalTime( int id) {   
+
+    public static Time getTotalTime(int id) {
         Time totalTime = null;
         try {
-            ResultSet rs = e.executeSelectQueryWithCondition("totaltime", "parkedcar", id);
+            ResultSet rs = executeSelectQueryWithCondition("totaltime", "parkedcar", "id =" + id);
             totalTime = rs.getTime("totaltime");
             rs.close();
-            
-        }catch (SQLException exceptionError) {
-           System.out.println(exceptionError);
+
+        } catch (SQLException exceptionError) {
+            System.out.println(exceptionError);
         }
         return totalTime;
     }
-  
+
     public int getAppropriateSpot(String tableName) {
         int x = 0;
         try {
@@ -38,13 +41,13 @@ public class Geter {
                 x = pc.getInt("spot");
             }
             pc.close();
-       
+
         } catch (SQLException exceptionError) {
             System.out.println(exceptionError);
         }
         return x;
     }
-    
+
     public int getID(String TableName) {
         int k = 2000;
         int i = 0;
@@ -53,11 +56,12 @@ public class Geter {
             while (rs.next()) {
                 i = rs.getInt("id");
                 k++;
-            }if (k == 2000) {
+            }
+            if (k == 2000) {
                 i = 2000;
             }
             rs.close();
-          
+
         } catch (SQLException exceptionError) {
             System.out.println(exceptionError);
         }

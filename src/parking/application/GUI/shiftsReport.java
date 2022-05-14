@@ -1,13 +1,7 @@
 package parking.application.GUI;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import Model.Admin;
 import javax.swing.table.DefaultTableModel;
-import static parking.application.classes.Connectsql.setConnection;
 
 /**
  *
@@ -15,29 +9,20 @@ import static parking.application.classes.Connectsql.setConnection;
  */
 public class ShiftsReport extends javax.swing.JFrame {
 
+    Admin admin = new Admin();
+
     public ShiftsReport() {
         DefaultTableModel dtm = new DefaultTableModel();
         initComponents();
-        try {
-            initComponents();
-            this.jTable1.setModel(dtm);
-            dtm.addColumn("Id");
-            dtm.addColumn("Spot");
-            dtm.addColumn("Start time");
-            dtm.addColumn("End time");
-            dtm.addColumn("Total time");
-            dtm.addColumn("Plate number");
-            dtm.addColumn("Payment");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from totalcars");
-            while (rs.next()) {
-                dtm.addRow(new Object[]{rs.getInt("id"), rs.getInt("spot"), rs.getTime("starttime"), rs.getTime("endtime"), rs.getTime("totaltime"), rs.getString("platenum"), rs.getFloat("payment")});
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(RevelationParkedCar.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.jTable1.setModel(dtm);
+        dtm.addColumn("Id");
+        dtm.addColumn("Spot");
+        dtm.addColumn("Start time");
+        dtm.addColumn("End time");
+        dtm.addColumn("Total time");
+        dtm.addColumn("Plate number");
+        dtm.addColumn("Payment");
+        admin.viewShiftsReportWithPayment(dtm);
     }
 
 
@@ -50,7 +35,7 @@ public class ShiftsReport extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("View Shifts Report");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -123,9 +108,9 @@ public class ShiftsReport extends javax.swing.JFrame {
         {
             jTable1.print();
         }
-        catch (java.awt.print.PrinterException e)
+        catch (java.awt.print.PrinterException exception)
         {
-            System.out.println(e);
+            System.out.println(exception);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

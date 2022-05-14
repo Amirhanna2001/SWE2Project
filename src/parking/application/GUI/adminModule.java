@@ -1,5 +1,6 @@
 package parking.application.GUI;
 
+import Model.Admin;
 import parking.application.classes.Add;
 import parking.application.classes.Checker;
 import parking.application.classes.Delete;
@@ -9,22 +10,20 @@ import parking.application.classes.Delete;
  * @author Fady Malak
  */
 public class AdminModule extends javax.swing.JFrame {
-    Checker c=new Checker();
-    Add a=new Add();
-    Delete d=new Delete();
+    Admin admin=new Admin();
+    int freeSpots,busySpots,totalSpots;
    // entryStation x=new entryStation();
     public AdminModule() {
         initComponents();
-        int f=c.calculateFreeSpots();
-        int b=c.busySpots();
-        int t=f+b;
-        String ff,bb,tt;
-        ff=f+"";
-        bb=b+"";
-        tt=t+"";
-        jTextField1.setText(tt);
-        jTextField2.setText(bb);
-        jTextField3.setText(ff);
+        
+        
+        freeSpots=admin.calculateFreeSpots();
+        busySpots=admin.calculateBusySpots();
+        totalSpots=admin.calculateTotalSpots();
+        
+        jTextField1.setText(totalSpots+"");
+        jTextField2.setText(busySpots+"");
+        jTextField3.setText(freeSpots+"");
     }
 
 
@@ -48,7 +47,7 @@ public class AdminModule extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Admin Module");
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -247,36 +246,30 @@ public class AdminModule extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        a.addSpot();
-        int f=c.calculateFreeSpots();
-        int b=c.busySpots();
-        int t=f+b;
-        String ff,bb,tt;
-        ff=f+"";
-        bb=b+"";
-        tt=t+"";
-        jTextField1.setText(tt);
-        jTextField2.setText(bb);
-        jTextField3.setText(ff);
+        admin.addSpot();
+        freeSpots=admin.calculateFreeSpots();
+        busySpots=admin.calculateBusySpots();
+        totalSpots=admin.calculateTotalSpots();
+        
+        jTextField1.setText(totalSpots+"");
+        jTextField2.setText(busySpots+"");
+        jTextField3.setText(freeSpots+"");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        d.removeSpot();
-        int f = c.calculateFreeSpots();
-        int b = c.busySpots();
-        int t = f + b;
-        String ff, bb, tt;
-        ff = f + "";
-        bb = b + "";
-        tt = t + "";
-        jTextField1.setText(tt);
-        jTextField2.setText(bb);
-        jTextField3.setText(ff);
+        admin.removeSpot();
+        freeSpots=admin.calculateFreeSpots();
+        busySpots=admin.calculateBusySpots();
+        totalSpots=admin.calculateTotalSpots();
+        
+        jTextField1.setText(totalSpots+"");
+        jTextField2.setText(busySpots+"");
+        jTextField3.setText(freeSpots+"");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         new ShiftsReport().setVisible(true);
-this.setVisible(false);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

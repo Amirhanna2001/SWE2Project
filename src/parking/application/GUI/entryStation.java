@@ -1,5 +1,6 @@
 package parking.application.GUI;
 
+import Model.Admin;
 import java.awt.*;
 import javax.swing.JOptionPane;
 import parking.application.classes.Add;
@@ -17,7 +18,7 @@ public class EntryStation extends javax.swing.JFrame {
     CustomerModule c=new CustomerModule();
     private Component frame;
     Add a=new Add();
-    Checker s= new Checker();
+    Admin admin = new Admin();
     int x=0;
         SQLUpdateQuerys sql=new SQLUpdateQuerys();
 
@@ -25,7 +26,7 @@ public class EntryStation extends javax.swing.JFrame {
     public EntryStation() {
         initComponents();
 
-        int numberOfFreeSpots = s.calculateFreeSpots();
+        int numberOfFreeSpots = admin.calculateFreeSpots();
         if (numberOfFreeSpots == 0) {
             jTextField3.setText("0");
             jButton1.setEnabled(false);
@@ -51,7 +52,7 @@ public class EntryStation extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Entry Station");
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -171,9 +172,8 @@ public class EntryStation extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        d.deleteSpot();
+        
         int h = g.getID("parkedcar");
-        h=h-1;
       //  String p=c.getPlateNumber();
         String p=CustomerModule.x.getText();
        // c.x.getText();
@@ -181,6 +181,7 @@ public class EntryStation extends javax.swing.JFrame {
         try {
             int i = g.getID("parkedcar");
             int s = g.getAppropriateSpot("freespots");
+            d.deleteFirstFreeSpot();
             sql.executeInsertQuery("parkedcar (id,spot,platenum)",i +   ","   + s +   ",'"   + p+"'");
             a.setStartTime("parkedcar", i);
         } catch (Exception e) {
