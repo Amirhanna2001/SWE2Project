@@ -1,48 +1,46 @@
 package parking.application.classes;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 import static parking.application.classes.Connectsql.setConnection;
 
 public class SQLSelectQuerys {
            
     public static ResultSet executeSelectQueryWithoutCondition(String colnomName, String tableName){
-            ResultSet rs = null;
+            ResultSet resultSetFromTable = null;
             try{
-                Connection con = setConnection();
-                Statement st = con.createStatement();
-                rs = st.executeQuery("SELECT "+colnomName+" FROM "+tableName);
-            }catch (SQLException e){
-                System.out.println(e.getMessage());
+                Connection connectToServer = setConnection();
+                Statement statement = connectToServer.createStatement();
+                resultSetFromTable = statement.executeQuery("SELECT "+colnomName+" FROM "+tableName);
+            }catch (SQLException exception){
+                System.out.println(exception.getMessage());
             }
-            return rs;    
+            return resultSetFromTable;    
         }
 
     public static ResultSet executeSelectQueryWithCondition(String colnomName, String tableName, String condition){
-        ResultSet rs = null;
+        ResultSet resultSetFromTable = null;
         try{
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            rs = st.executeQuery("SELECT "+colnomName+" FROM "+tableName +" WHERE " +condition);
-            rs.next();
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
+            Connection connectToServer = setConnection();
+            Statement statement = connectToServer.createStatement();
+            resultSetFromTable = statement.executeQuery("SELECT "+colnomName+" FROM "+tableName +" WHERE " +condition);
+            resultSetFromTable.next();
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
         }
-        return rs;    
+        return resultSetFromTable;    
     }
 
     public static ResultSet executeSelectQueryLimitaion(String tableName){
-        ResultSet rs = null;
+        ResultSet resultSetFromTable = null;
         try{
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            rs = st.executeQuery("SELECT * FROM "+tableName + " limit 1");
-        }catch (SQLException e){
-            System.out.println(e.getMessage());
+            Connection connectToServer = setConnection();
+            Statement statement = connectToServer.createStatement();
+            resultSetFromTable = statement.executeQuery("SELECT * FROM "+tableName + " limit 1");
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
         }
-        return rs;    
+        return resultSetFromTable;    
     }
 
 }

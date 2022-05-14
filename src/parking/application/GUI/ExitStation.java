@@ -1,29 +1,18 @@
 package parking.application.GUI;
 
-import Model.Admin;
 import Model.Customer;
 import java.sql.*;
 import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import Model.TimeManagment;
 import static Model.TimeManagment.setEndTime;
 import static Model.TimeManagment.setTotalTime;
-import parking.application.classes.Geter;
-import parking.application.classes.Payment;
 import static Model.TimeManagment.getTotalTime;
 
-/**
- *
- * @author Fady Malak
- */
 public class ExitStation extends javax.swing.JFrame {
     
-    TimeManagment a= new TimeManagment();
-    Geter g= new Geter();
-    Payment p = new Payment();
-    Customer cust = new Customer();
+    Customer customer = new Customer();
     public ExitStation() {
         initComponents();
     }
@@ -33,7 +22,7 @@ public class ExitStation extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        idField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -52,10 +41,10 @@ public class ExitStation extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 0, 102));
         jPanel1.setForeground(java.awt.Color.lightGray);
 
-        jTextField1.setToolTipText("");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        idField.setToolTipText("");
+        idField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                idFieldActionPerformed(evt);
             }
         });
 
@@ -155,7 +144,7 @@ public class ExitStation extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 333, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
@@ -163,7 +152,7 @@ public class ExitStation extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(idField, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -179,7 +168,7 @@ public class ExitStation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(idField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -212,15 +201,14 @@ public class ExitStation extends javax.swing.JFrame {
 
    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String x =jTextField1.getText();
-        int id= Integer.parseInt(x);
+        
+        int id= Integer.parseInt(idField.getText());
     
         setEndTime("parkedcar", id);
         setTotalTime("parkedcar", id);
-        float payment=cust.calculatePayment(id);
-        Time t=getTotalTime(id);
-        String time=t.toString();
-        jTextField2.setText(time);        
+        float payment=customer.calculatePayment(id);
+        Time totalTime=getTotalTime(id);
+        jTextField2.setText(totalTime.toString());        
         jTextPane1.setText(payment+"$");
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -229,13 +217,11 @@ public class ExitStation extends javax.swing.JFrame {
 }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         jButtonAction(evt);
-        String x = jTextField1.getText();
-        int id = Integer.parseInt(x);
+        int id = Integer.parseInt(idField.getText());
         try {
-            cust.PayInExitStation(id);
-            cust.translateDataToTotalCar(id);
-            cust.deleteUSerDataById(id);
-            
+            customer.PayInExitStation(id);
+            customer.translateDataToTotalCar(id);
+            customer.deleteUSerDataById(id);       
         } catch (SQLException ex) {
             Logger.getLogger(ExitStation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -245,9 +231,9 @@ public class ExitStation extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_idFieldActionPerformed
 
     public static void main(String args[]) {
 
@@ -262,6 +248,7 @@ public class ExitStation extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField idField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -272,7 +259,6 @@ public class ExitStation extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextPane jTextPane1;
     // End of variables declaration//GEN-END:variables

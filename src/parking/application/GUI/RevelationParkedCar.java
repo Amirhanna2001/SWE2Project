@@ -2,25 +2,19 @@ package parking.application.GUI;
 
 import Model.Admin;
 import javax.swing.table.DefaultTableModel;
-import java.sql.*;
 
-import static parking.application.classes.Connectsql.setConnection;
-/**
- *
- * @author Fady Malak
- */
 public class RevelationParkedCar extends javax.swing.JFrame {
 
     Admin admin=new Admin();
-    DefaultTableModel dtm=new DefaultTableModel();
+    DefaultTableModel defaultTableModel = new DefaultTableModel();
     public RevelationParkedCar() {
             initComponents();
-            this.jTable3.setModel(dtm);
-            dtm.addColumn("Id");
-            dtm.addColumn("Spot");
-            dtm.addColumn("Start time");
-            dtm.addColumn("Plate number");
-            admin.viewParkedCarsReport(dtm);
+            this.jTable3.setModel(defaultTableModel);
+            defaultTableModel.addColumn("Id");
+            defaultTableModel.addColumn("Spot");
+            defaultTableModel.addColumn("Start time");
+            defaultTableModel.addColumn("Plate number");
+            admin.viewParkedCarsReport(defaultTableModel);
     }
 
 
@@ -105,8 +99,8 @@ public class RevelationParkedCar extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             jTable3.print();
-        } catch (java.awt.print.PrinterException e) {
-            System.out.println(e);
+        } catch (java.awt.print.PrinterException exception) {
+            System.out.println(exception);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

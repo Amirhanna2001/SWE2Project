@@ -1,28 +1,26 @@
 package parking.application.GUI;
 
 import Model.Customer;
+import Model.SpotsModification;
+import static Model.SpotsModification.deleteFirstFreeSpot;
 import java.awt.Component;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import Model.TimeManagment;
+import static Model.TimeManagment.GetCurrentTime;
 import parking.application.classes.Geter;
-
+import static parking.application.classes.Geter.getRightSpot;
 
 public class UserAddition extends javax.swing.JFrame {
 
     public UserAddition() {
         initComponents();
-       
     }
-    
-    Geter g=new Geter();
-    TimeManagment a=new TimeManagment();
-    Customer customer=new Customer();
- 
+
+    Geter geter = new Geter();
+    TimeManagment timeManagment = new TimeManagment();
+    Customer customer = new Customer();
+    SpotsModification spotsModification = new SpotsModification();
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -195,36 +193,28 @@ public class UserAddition extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        
+
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        
+
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String plateNumber= jTextField3.getText();
-        boolean isExist=customer.isExistPlateNumber(plateNumber);
-        if (isExist==true)
-        {
+        String plateNumber = jTextField3.getText();
+        boolean isExist = customer.isExistPlateNumber(plateNumber);
+        if (isExist == true) {
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "The Plate Number You Entered is already Exist\n Please Enter another Plate Number");
-        }
-        else
-        {
-            int id=Geter.getID();
-            jTextField1.setText(id+"");
+        } else {
+            int id = Geter.getID();
+            jTextField1.setText(id + "");
             customer.bookASpot(plateNumber);
-            customer.deleteFirstFreeSpot();
-            jFormattedTextField1.setText(a.GetCurrentTime());
-            int s=g.getRightSpot();
-            jTextField2.setText(s+"");
+            deleteFirstFreeSpot();
+            jFormattedTextField1.setText(GetCurrentTime());
+            jTextField2.setText(getRightSpot() + "");
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "User added Successfully");
-            jFormattedTextField1.setText("");
-            jTextField2.setText("");
-            jTextField1.setText("");
-            jTextField3.setText("");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -1,13 +1,11 @@
 package parking.application.GUI;
 
-import Model.Admin;
-import Model.Customer;
+import Model.*;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 
 public class UserDeletion extends javax.swing.JFrame {
 
@@ -128,8 +126,8 @@ public class UserDeletion extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         int index =0;
-        index=jComboBox1.getSelectedIndex();
-        if(index!=-1)
+        index = jComboBox1.getSelectedIndex();
+        if(index != -1)
         {
             jTextField1.setEditable(true);
         }
@@ -142,25 +140,23 @@ public class UserDeletion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String text=jTextField1.getText();
+        String text = jTextField1.getText();
         int index ;
         index=jComboBox1.getSelectedIndex();
         
         if(index==0)
         {
             try {
-                int id=Integer.parseInt(text);
-                customer.deleteUSerDataById(id);
+                customer.deleteUSerDataById(Integer.parseInt(text));
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "User Removed Successfully");
-            } catch (SQLException ex) {
-                Logger.getLogger(UserDeletion.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException exception) {
+                Logger.getLogger(UserDeletion.class.getName()).log(Level.SEVERE, null, exception);
             }
         }
         else if (index==1)
         {
-            int s=Integer.parseInt(text);
-            admin.deleteUserDataBySpot(s);
+            admin.deleteUserDataBySpot(Integer.parseInt(text));
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "User Removed Successfully");
         }

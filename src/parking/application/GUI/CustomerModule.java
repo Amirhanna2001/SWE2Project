@@ -1,16 +1,11 @@
 package parking.application.GUI;
 
 import Model.Customer;
-import Model.TimeManagment;
-import parking.application.classes.Geter;
 import parking.application.classes.SQLUpdateQuerys;
 import static Model.TimeManagment.GetCurrentTime;
 
 public class CustomerModule extends javax.swing.JFrame {
 
-
-    Geter g=new Geter();
-    TimeManagment a=new TimeManagment();
     public static String plateNumber;
     SQLUpdateQuerys sql=new SQLUpdateQuerys();
     boolean isPlateNumberExist;
@@ -33,7 +28,7 @@ public class CustomerModule extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        x = new javax.swing.JTextField();
+        plateNumberField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -69,9 +64,9 @@ public class CustomerModule extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Plate Number");
 
-        x.addActionListener(new java.awt.event.ActionListener() {
+        plateNumberField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                xActionPerformed(evt);
+                plateNumberFieldActionPerformed(evt);
             }
         });
 
@@ -153,7 +148,7 @@ public class CustomerModule extends javax.swing.JFrame {
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(x, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(plateNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -171,7 +166,7 @@ public class CustomerModule extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(x, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(plateNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -220,7 +215,7 @@ public class CustomerModule extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void setPlateNumber(){
-        plateNumber = x.getText();
+        plateNumber = plateNumberField.getText();
     }
     public static String getPlateNumber() {
         return plateNumber;
@@ -257,9 +252,9 @@ public class CustomerModule extends javax.swing.JFrame {
     }//GEN-LAST:event_entryActionPerformed
 
 
-    private void xActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xActionPerformed
+    private void plateNumberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plateNumberFieldActionPerformed
 
-    }//GEN-LAST:event_xActionPerformed
+    }//GEN-LAST:event_plateNumberFieldActionPerformed
         
     public static void main(String args[]) {
 
@@ -283,6 +278,6 @@ public class CustomerModule extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField3;
     private parking.application.classes.ParkingApplication parkingApplication1;
-    public static javax.swing.JTextField x;
+    public static javax.swing.JTextField plateNumberField;
     // End of variables declaration//GEN-END:variables
 }

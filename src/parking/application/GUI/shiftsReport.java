@@ -3,26 +3,23 @@ package parking.application.GUI;
 import Model.Admin;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Fady Malak
- */
 public class ShiftsReport extends javax.swing.JFrame {
 
     Admin admin = new Admin();
-
+    DefaultTableModel defaultTableModel = new DefaultTableModel();
+    
     public ShiftsReport() {
-        DefaultTableModel dtm = new DefaultTableModel();
+        
         initComponents();
-        this.jTable1.setModel(dtm);
-        dtm.addColumn("Id");
-        dtm.addColumn("Spot");
-        dtm.addColumn("Start time");
-        dtm.addColumn("End time");
-        dtm.addColumn("Total time");
-        dtm.addColumn("Plate number");
-        dtm.addColumn("Payment");
-        admin.viewShiftsReportWithPayment(dtm);
+        this.jTable1.setModel(defaultTableModel);
+        defaultTableModel.addColumn("Id");
+        defaultTableModel.addColumn("Spot");
+        defaultTableModel.addColumn("Start time");
+        defaultTableModel.addColumn("End time");
+        defaultTableModel.addColumn("Total time");
+        defaultTableModel.addColumn("Plate number");
+        defaultTableModel.addColumn("Payment");
+        admin.viewShiftsReportWithPayment(defaultTableModel);
     }
 
 
