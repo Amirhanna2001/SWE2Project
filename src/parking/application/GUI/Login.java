@@ -127,9 +127,9 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String uname=jTextField1.getText();
-        String pass=jPasswordField1.getText();
-        if (uname.equals("admin")&&pass.equals("admin"))
+        String userName=jTextField1.getText();
+        String password=jPasswordField1.getText();
+        if (userName.equals("admin") && password.equals("admin"))
         {
             new AdminModule().setVisible(true);
             this.setVisible(false);

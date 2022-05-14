@@ -2,6 +2,7 @@ package parking.application.GUI;
 
 import Model.Admin;
 import Model.Customer;
+import Model.SpotsModification;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
@@ -12,8 +13,9 @@ public class UserModification extends javax.swing.JFrame {
         jPanel2.setVisible(false);
 
     }
-Admin admin = new Admin();
-Customer customer = new Customer();
+    Admin admin = new Admin();
+    Customer customer = new Customer();
+    SpotsModification spotsModification = new SpotsModification();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -187,66 +189,56 @@ Customer customer = new Customer();
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Component frame = null;
-        String i=jTextField1.getText();
+        String id = jTextField1.getText();
         if (jTextField1.getText().equals("")) {
             JOptionPane.showMessageDialog(frame, "Invalid ID");
         } else {
-            int id = Integer.parseInt(i);
-            boolean z = customer.isExist(id, "id", "parkedcar");
-            if (z == true) {
+            boolean exist = customer.isExist(Integer.parseInt(id), "id", "parkedcar");
+            if (exist == true) {
                 jPanel2.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(frame, "Invalid ID");
             }
         }
 
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-       
+
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         new AdminModule().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        int index ;
-        index=jComboBox1.getSelectedIndex();
-        if(index!=-1)
-        {
+        int index;
+        index = jComboBox1.getSelectedIndex();
+        if (index != -1) {
             jTextField2.setEditable(true);
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String text=jTextField2.getText();
-        int index ;
-        index=jComboBox1.getSelectedIndex();
-        
-        if(index==0)
-        {
-            String pl=text;
-            String i=jTextField1.getText();
-             int id = Integer.parseInt(i);
-            admin.updatePlateNumberByID(pl,id);
+        String text = jTextField2.getText();
+        int index;
+        index = jComboBox1.getSelectedIndex();
+
+        if (index == 0) {
+            String plateNumber = text;
+            int id = Integer.parseInt(jTextField1.getText());
+            admin.updatePlateNumberByID(plateNumber, id);
             System.out.println("Done");
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "Plate Number Updated Successfully");
-        }
-        else if (index==1)
-        {
-            int s=Integer.parseInt(text);
-            boolean z=customer.isExist(s, "spot", "freespots");
-            String i=jTextField1.getText();
-             int id = Integer.parseInt(i);
-            if (z==true)
-            {
-                admin.updateSpotNumberByID(id,s);
+        } else if (index == 1) {
+            int spot = Integer.parseInt(text);
+            boolean exist = customer.isExist(spot, "spot", "freespots");
+            int id = Integer.parseInt(jTextField1.getText());
+            if (exist == true) {
+                spotsModification.updateSpotNumberByID(id, spot);
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "Spot Number Updated Successfully");
-            }
-            else
-            {
+            } else {
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "Invalid Spot");
             }
@@ -254,7 +246,7 @@ Customer customer = new Customer();
         jTextField2.setText("");
         jTextField1.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
-    
+
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
 
     }//GEN-LAST:event_jTextField1ActionPerformed

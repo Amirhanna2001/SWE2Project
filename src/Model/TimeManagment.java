@@ -24,9 +24,9 @@ public class TimeManagment {
     public static Time getTotalTime(int id) {
         Time totalTime = null;
         try {
-            ResultSet rs = executeSelectQueryWithCondition("totaltime", "parkedcar", "id =" + id);
-            totalTime = rs.getTime("totaltime");
-            rs.close();
+            ResultSet resultSetFromParkedCar = executeSelectQueryWithCondition("totaltime", "parkedcar", "id =" + id);
+            totalTime = resultSetFromParkedCar.getTime("totaltime");
+            resultSetFromParkedCar.close();
 
         } catch (SQLException exceptionError) {
             System.out.println(exceptionError);
@@ -42,9 +42,9 @@ public class TimeManagment {
         String time = dateFormat.format(date);
 
         try {
-            executeUpdateQuerys(TableName + " set starttime", time, id);
-        } catch (Exception ex) {
-            System.out.println(ex);
+            executeUpdateQuerys(TableName + " set startTime", time, id);
+        } catch (Exception exceptionError) {
+            System.out.println(exceptionError);
         }
     }
 
@@ -57,22 +57,22 @@ public class TimeManagment {
 
         try {
             executeUpdateQuerys(TableName + " set endtime", time, id);
-        } catch (Exception ex) {
-            System.out.println(ex);
+        } catch (Exception exceptionError) {
+            System.out.println(exceptionError);
         }
 
     }
 
     public static void setTotalTime(String TableName, long id) {
-        Connection con = setConnection();
+        Connection connectToServer = setConnection();
         try {
-            Statement st = con.createStatement();
-            st.executeUpdate("UPDATE " + TableName + " SET `totaltime`=(SELECT TIMEDIFF(endtime,starttime)) WHERE id=" + id + "");
-            //i.executeUpdateQuerys(TableName + " SET `totaltime`" ,"(SELECT TIMEDIFF(endtime,starttime))", id);
-            st.close();
-            con.close();
-        } catch (Exception ex) {
-            System.out.println(ex);
+            Statement statement = connectToServer.createStatement();
+            statement.executeUpdate("UPDATE " + TableName + " SET `totaltime`=(SELECT TIMEDIFF(endtime,starttime)) WHERE id=" 
+                    + id + "");
+            statement.close();
+            connectToServer.close();
+        } catch (Exception exceptionError) {
+            System.out.println(exceptionError);
         }
 
     }

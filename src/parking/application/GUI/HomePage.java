@@ -1,18 +1,7 @@
-
 package parking.application.GUI;
 
-
-/**
- *
- * @author Fady Malak
- */
 public class HomePage extends javax.swing.JFrame {
-
-    private Object color;
-
-    /**
-     * Creates new form f1
-     */
+    
     public HomePage() {
         initComponents();
         show();

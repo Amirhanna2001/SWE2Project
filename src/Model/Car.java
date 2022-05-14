@@ -1,13 +1,10 @@
 package Model;
 
-import java.sql.ResultSet;
+import java.sql.*;
 import static Model.TimeManagment.*;
-import java.sql.SQLException;
-import java.sql.Time;
 import parking.application.classes.Geter;
 import static parking.application.classes.Payment.setPayment;
 import static parking.application.classes.SQLDeleteQuerys.executeDeleteQuery;
-import static parking.application.classes.SQLDeleteQuerys.executeDeleteQueryLimitaion;
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithCondition;
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithoutCondition;
 import static parking.application.classes.SQLUpdateQuerys.executeInsertQuery;
@@ -35,9 +32,9 @@ public abstract class Car {
     }
 
     public void translateSpotDataToFreeSpots(int id) throws SQLException {
-        ResultSet hu = executeSelectQueryWithCondition("spot", "parkedcar", "id =" + id);
-        int s = hu.getInt("spot");
-        executeInsertQuery("freespots", s + "");
+        ResultSet resultSetFromParkedCar = executeSelectQueryWithCondition("spot", "parkedcar", "id =" + id);
+        int spot = resultSetFromParkedCar.getInt("spot");
+        executeInsertQuery("freespots", spot + "");
     }
 
     public void translateDataToTotalCar(int id) throws SQLException {
@@ -45,14 +42,15 @@ public abstract class Car {
         String plateNumber;
         float payment;
         Time startTime, endTime, totalTime;
-        ResultSet resultSet = executeSelectQueryWithCondition("*", "parkedcar", "id =" + id);
-        spot = resultSet.getInt("spot");
-        plateNumber = resultSet.getString("platenum");
-        payment = resultSet.getFloat("payment");
-        startTime = resultSet.getTime("starttime");
-        endTime = resultSet.getTime("endtime");
-        totalTime = resultSet.getTime("totalTime");
-        executeInsertQuery("totalcars", id + "," + spot + ",'" + startTime + "','" + endTime + "','" + totalTime + "','" + plateNumber + "','" + payment + "'");
+        ResultSet resultSetFromParkedCar = executeSelectQueryWithCondition("*", "parkedcar", "id =" + id);
+        spot = resultSetFromParkedCar.getInt("spot");
+        plateNumber = resultSetFromParkedCar.getString("platenum");
+        payment = resultSetFromParkedCar.getFloat("payment");
+        startTime = resultSetFromParkedCar.getTime("starttime");
+        endTime = resultSetFromParkedCar.getTime("endtime");
+        totalTime = resultSetFromParkedCar.getTime("totalTime");
+        executeInsertQuery("totalcars", id + "," + spot + ",'" + startTime + "','" + endTime + "','" + totalTime + "','" +
+                plateNumber + "','" + payment + "'");
     }
 
     public float calculatePayment(int id) {
@@ -62,24 +60,16 @@ public abstract class Car {
         return payment;
     }
     
-    public static void deleteFirstFreeSpot() {
-        try {
-            executeDeleteQueryLimitaion("freespots");
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
-    
-        public static int maximumSpot(ResultSet rs) throws SQLException {
-        int s;
-        int max = 0;
-        while (rs.next()) {
-            s = rs.getInt("spot");
-            if (max < s) {
-                max = s;
+        public static int maximumSpot(ResultSet resultSet) throws SQLException {
+        int spot;
+        int maxSpot = 0;
+        while (resultSet.next()) {
+            spot = resultSet.getInt("spot");
+            if (maxSpot < spot) {
+                maxSpot = spot;
             }
         }
-        return max;
+        return maxSpot;
     }
 
     public boolean isExist(int value,String column,String table) {

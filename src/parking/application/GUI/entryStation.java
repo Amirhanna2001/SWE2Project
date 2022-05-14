@@ -2,43 +2,40 @@ package parking.application.GUI;
 
 import Model.Admin;
 import Model.Customer;
+import Model.CalculationOfSpots;
+import Model.SpotsModification;
+import static Model.SpotsModification.deleteFirstFreeSpot;
 import java.awt.*;
 import javax.swing.JOptionPane;
 import static parking.application.GUI.CustomerModule.*;
-import Model.TimeManagment;
-import static Model.TimeManagment.setStartTime;
 import parking.application.classes.Geter;
 import parking.application.classes.SQLUpdateQuerys;
 
-
-
 public class EntryStation extends javax.swing.JFrame {
 
-    Geter g= new Geter();
-    CustomerModule c=new CustomerModule();
+    Geter geter = new Geter();
     private Component frame;
-    TimeManagment a=new TimeManagment();
-    Customer cust = new Customer();
+    Customer customer = new Customer();
     Admin admin = new Admin();
-    int x=0;
-        SQLUpdateQuerys sql=new SQLUpdateQuerys();
+    CalculationOfSpots calculationOfSpots = new CalculationOfSpots();
+    SpotsModification spotsModification = new SpotsModification();
 
-        
+    SQLUpdateQuerys sql = new SQLUpdateQuerys();
+
     public EntryStation() {
         initComponents();
 
-        int numberOfFreeSpots = admin.calculateFreeSpots();
+        int numberOfFreeSpots = calculationOfSpots.calculateFreeSpots();
         if (numberOfFreeSpots == 0) {
             jTextField3.setText("0");
             jButton1.setEnabled(false);
         } else {
             jTextField3.setText(numberOfFreeSpots + " Spot");
-            int z = g.getRightSpot();
-            jTextField1.setText(z+"");
+            int rightSpot = geter.getRightSpot();
+            jTextField1.setText(rightSpot + "");
         }
 
     }
- 
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -171,20 +168,18 @@ public class EntryStation extends javax.swing.JFrame {
         new HomePage().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2MouseClicked
-//    public String getPlateNumber() {
-//        return PlateNumber;
-//    }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int id=Geter.getID();
-        String p=getPlateNumber();
-        cust.bookASpot(p);
-        cust.deleteFirstFreeSpot();
+        int id = Geter.getID();
+        String plateNumber = getPlateNumber();
+        customer.bookASpot(plateNumber);
+        deleteFirstFreeSpot();
         JOptionPane.showMessageDialog(frame, "Book has been succesfull\nyour id: " + id);
         new HomePage().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new CustomerModule().setVisible(true);
         this.setVisible(false);
@@ -195,7 +190,6 @@ public class EntryStation extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -204,7 +198,7 @@ public class EntryStation extends javax.swing.JFrame {
             }
         });
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton jButton1;

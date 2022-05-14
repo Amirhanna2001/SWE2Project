@@ -1,13 +1,7 @@
 package parking.application.classes;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.*;
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryLimitaion;
-import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithCondition;
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithoutCondition;
 
 public class Geter {

@@ -1,27 +1,21 @@
 package parking.application.GUI;
 
+import Model.CalculationOfSpots;
 import Model.Admin;
-import Model.TimeManagment;
-/**
- *
- * @author Fady Malak
- */
+import Model.SpotsModification;
+
 public class AdminModule extends javax.swing.JFrame {
-    Admin admin=new Admin();
-    int freeSpots,busySpots,totalSpots;
+
+    CalculationOfSpots calculationOfSpots = new CalculationOfSpots();
+    Admin admin = new Admin();
+    SpotsModification spotsModification = new SpotsModification();
+
+    int freeSpots, busySpots, totalSpots;
+
     public AdminModule() {
         initComponents();
-        
-        
-        freeSpots=admin.calculateFreeSpots();
-        busySpots=admin.calculateBusySpots();
-        totalSpots=admin.calculateTotalSpots();
-        
-        jTextField1.setText(totalSpots+"");
-        jTextField2.setText(busySpots+"");
-        jTextField3.setText(freeSpots+"");
+        viewSpots();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -242,25 +236,16 @@ public class AdminModule extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        admin.addSpot();
-        freeSpots=admin.calculateFreeSpots();
-        busySpots=admin.calculateBusySpots();
-        totalSpots=admin.calculateTotalSpots();
+
         
-        jTextField1.setText(totalSpots+"");
-        jTextField2.setText(busySpots+"");
-        jTextField3.setText(freeSpots+"");
+        spotsModification.addSpot();
+        viewSpots();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        admin.removeSpot();
-        freeSpots=admin.calculateFreeSpots();
-        busySpots=admin.calculateBusySpots();
-        totalSpots=admin.calculateTotalSpots();
         
-        jTextField1.setText(totalSpots+"");
-        jTextField2.setText(busySpots+"");
-        jTextField3.setText(freeSpots+"");
+        spotsModification.removeSpot();
+        viewSpots();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -274,7 +259,7 @@ public class AdminModule extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-         new UserAddition().setVisible(true);
+        new UserAddition().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -295,6 +280,16 @@ public class AdminModule extends javax.swing.JFrame {
                 new AdminModule().setVisible(true);
             }
         });
+    }
+
+    public void viewSpots() {
+        freeSpots = calculationOfSpots.calculateFreeSpots();
+        busySpots = calculationOfSpots.calculateBusySpots();
+        totalSpots = calculationOfSpots.calculateTotalSpots();
+
+        jTextField1.setText(totalSpots + "");
+        jTextField2.setText(busySpots + "");
+        jTextField3.setText(freeSpots + "");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
