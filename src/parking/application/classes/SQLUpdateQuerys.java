@@ -7,24 +7,24 @@ import static parking.application.classes.Connectsql.setConnection;
 
 public class SQLUpdateQuerys {
     
-   public void executeInsertQuery(String tableName , String valuesName){
+   public static void executeInsertQuery(String tableName , String valueName){
         try{
-            java.sql.Connection connection = setConnection();
-            Statement statement = connection.createStatement();
-            statement.executeUpdate("INSERT INTO "+tableName+" VALUES (" + valuesName +")");
-            
-        }catch(SQLException execption){
-            System.out.println(execption);
+            java.sql.Connection con = setConnection();
+            Statement st = con.createStatement();
+            st.executeUpdate("INSERT INTO "+tableName+" VALUES (" + valueName +")");            
+        }catch(SQLException ex){
+            System.out.println(ex);
         }
     }
    
-   public void executeUpdateQuerys(String tableAndColnomName , String newValue , long id){
-      try{ 
-        Connection connection = setConnection();
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("UPDATE " + tableAndColnomName +" = '" + newValue + "' WHERE ID = " + id +"");
-      }catch(SQLException execption){
-          System.out.println(execption);
+   public static void executeUpdateQuerys(String tableAndColnomName , String newValue , long id){
+      try{  
+        Connection con = setConnection();
+        Statement st = con.createStatement();
+        st.executeUpdate("UPDATE " + tableAndColnomName +" = '" + newValue + "' WHERE ID = " + id +"");
+      }catch(SQLException ex){
+          System.out.println(ex);
       }
    }
+    
 }

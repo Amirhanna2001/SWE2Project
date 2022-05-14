@@ -1,5 +1,6 @@
 package parking.application.GUI;
 
+import Model.Admin;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
 
@@ -10,26 +11,16 @@ import static parking.application.classes.Connectsql.setConnection;
  */
 public class RevelationParkedCar extends javax.swing.JFrame {
 
+    Admin admin=new Admin();
     DefaultTableModel dtm=new DefaultTableModel();
     public RevelationParkedCar() {
-        try {
             initComponents();
             this.jTable3.setModel(dtm);
             dtm.addColumn("Id");
             dtm.addColumn("Spot");
             dtm.addColumn("Start time");
             dtm.addColumn("Plate number");
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = setConnection();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from parkedcar");
-            while (rs.next())
-            {
-                dtm.addRow(new Object[] {rs.getInt("id"),rs.getInt("spot"),rs.getTime("starttime"),rs.getString("platenum")});
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Error");
-        }
+            admin.viewParkedCarsReport(dtm);
     }
 
 
@@ -42,7 +33,7 @@ public class RevelationParkedCar extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Parked Cars");
         setFocusTraversalPolicyProvider(true);
 
