@@ -6,7 +6,7 @@ import static parking.application.classes.Connectsql.setConnection;
 import static parking.application.classes.SQLDeleteQuerys.*;
 import static parking.application.classes.SQLUpdateQuerys.*;
 
-public class Admin extends Car {
+public class Admin extends ParkingMangement {
 
     public void updatePlateNumberByID(String plateNumber, int id) {
         try {

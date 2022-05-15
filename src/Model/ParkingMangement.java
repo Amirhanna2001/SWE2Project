@@ -9,10 +9,9 @@ import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWith
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithoutCondition;
 import static parking.application.classes.SQLUpdateQuerys.executeInsertQuery;
 
-public abstract class Car {
+public abstract class ParkingMangement {
 
     public void PayInExitStation(int id) throws SQLException {
-
         setEndTime("parkedcar", id);
         setTotalTime("parkedcar", id);
         float payment = calculatePayment(id);
@@ -20,7 +19,6 @@ public abstract class Car {
     }
 
     public void deleteUSerDataById(int id) throws SQLException {
-        translateSpotDataToFreeSpots(id);
         executeDeleteQuery("parkedcar", "id =" + id);
     }
 

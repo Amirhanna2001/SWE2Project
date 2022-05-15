@@ -221,6 +221,7 @@ public class ExitStation extends javax.swing.JFrame {
         try {
             customer.PayInExitStation(id);
             customer.translateDataToTotalCar(id);
+            customer.translateSpotDataToFreeSpots(id);
             customer.deleteUSerDataById(id);       
         } catch (SQLException ex) {
             Logger.getLogger(ExitStation.class.getName()).log(Level.SEVERE, null, ex);

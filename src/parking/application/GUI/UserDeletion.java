@@ -147,6 +147,7 @@ public class UserDeletion extends javax.swing.JFrame {
         if(index==0)
         {
             try {
+                customer.translateSpotDataToFreeSpots(Integer.parseInt(text));
                 customer.deleteUSerDataById(Integer.parseInt(text));
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "User Removed Successfully");
