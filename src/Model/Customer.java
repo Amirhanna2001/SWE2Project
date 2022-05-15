@@ -1,6 +1,6 @@
 package Model;
 
-public class Customer extends Car{
+public class Customer extends ParkingMangement{
 
     
 }

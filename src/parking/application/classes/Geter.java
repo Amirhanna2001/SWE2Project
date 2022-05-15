@@ -12,9 +12,8 @@ public class Geter {
         int x = 0;
         try {
             ResultSet pc = executeSelectQueryLimitaion("freespots");
-            while (pc.next()) {
-                x = pc.getInt("spot");
-            }
+            pc.next();
+            x = pc.getInt("spot");
             pc.close();
 
         } catch (SQLException exceptionError) {
@@ -24,19 +23,13 @@ public class Geter {
     }
 
     public static int getID () {
-        int k = 2000;
-        int i = 0;
+        int i = 2000;
         try {
             ResultSet rs = executeSelectQueryWithoutCondition("id", "parkedcar");
             while (rs.next()) {
                 i = rs.getInt("id");
-                k++;
-            }
-            if (k == 2000) {
-                i = 2000;
-            }
+            }         
             rs.close();
-
         } catch (SQLException exceptionError) {
             System.out.println(exceptionError);
         }

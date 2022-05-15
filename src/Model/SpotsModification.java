@@ -1,7 +1,7 @@
 package Model;
 
 import java.sql.*;
-import static Model.Car.maximumSpot;
+import static Model.ParkingMangement.maximumSpot;
 import static parking.application.classes.SQLDeleteQuerys.executeDeleteQuery;
 import static parking.application.classes.SQLDeleteQuerys.executeDeleteQueryLimitaion;
 import static parking.application.classes.SQLSelectQuerys.executeSelectQueryWithCondition;
