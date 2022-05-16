@@ -1,26 +1,22 @@
 package View;
 
-import Controller.Admin;
-import Controller.Customer;
-import Controller.CalculationOfSpots;
-import Controller.SpotsModification;
+import Controller.*;
+import static Controller.Customer.getNextID;
 import static Controller.SpotsModification.deleteFirstFreeSpot;
+import static Controller.SpotsModification.getRightSpot;
 import java.awt.*;
 import javax.swing.JOptionPane;
 import static View.CustomerModule.*;
-import Model.Geter;
-import Model.SQLUpdateQuerys;
+import Model.SQLQueries;
 
 public class EntryStation extends javax.swing.JFrame {
 
-    Geter geter = new Geter();
     private Component frame;
     Customer customer = new Customer();
     Admin admin = new Admin();
     CalculationOfSpots calculationOfSpots = new CalculationOfSpots();
     SpotsModification spotsModification = new SpotsModification();
-
-    SQLUpdateQuerys sql = new SQLUpdateQuerys();
+    SQLQueries sql = new SQLQueries();
 
     public EntryStation() {
         initComponents();
@@ -31,7 +27,7 @@ public class EntryStation extends javax.swing.JFrame {
             jButton1.setEnabled(false);
         } else {
             jTextField3.setText(numberOfFreeSpots + " Spot");
-            int rightSpot = geter.getRightSpot();
+            int rightSpot = getRightSpot();
             jTextField1.setText(rightSpot + "");
         }
 
@@ -77,7 +73,6 @@ public class EntryStation extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Park at spot");
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Book this Spot");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -122,11 +117,11 @@ public class EntryStation extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,7 +165,7 @@ public class EntryStation extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int id = Geter.getID();
+        int id = getNextID();
         String plateNumber = getPlateNumber();
         customer.addItemToDataBase(plateNumber);
         deleteFirstFreeSpot();

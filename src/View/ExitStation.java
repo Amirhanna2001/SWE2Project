@@ -1,22 +1,22 @@
 package View;
 
-import Controller.Customer;
+
+import static Controller.Customer.setPayment;
+import static Controller.Customer.calculateTotalPayment;
+import static Controller.ParkingMangement.*;
 import java.sql.*;
 import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static Controller.TimeManagment.setEndTime;
-import static Controller.TimeManagment.setTotalTime;
-import static Controller.TimeManagment.getTotalTime;
+import static Controller.TimeManagment.*;
 
 public class ExitStation extends javax.swing.JFrame {
-    
-    Customer customer = new Customer();
+
     public ExitStation() {
         initComponents();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -143,7 +143,7 @@ public class ExitStation extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
@@ -157,7 +157,7 @@ public class ExitStation extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addComponent(jLabel4)))
-                .addGap(10, 10, 10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,21 +175,25 @@ public class ExitStation extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 102, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(367, 306));
+        setSize(new java.awt.Dimension(363, 361));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -198,30 +202,31 @@ public class ExitStation extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-   
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        int id= Integer.parseInt(idField.getText());
-    
+
+        int id = Integer.parseInt(idField.getText());
+
         setEndTime("parkedcar", id);
         setTotalTime("parkedcar", id);
-        double payment=customer.calculateTotalPayment(id);
-        Time totalTime=getTotalTime(id);
-        jTextField2.setText(totalTime.toString());        
-        jTextPane1.setText(payment+"$");
-        
+        double payment = calculateTotalPayment(id);
+        Time totalTime = getTotalTime(id);
+        jTextField2.setText(totalTime.toString());
+        jTextPane1.setText(payment + "$");
+
     }//GEN-LAST:event_jButton1ActionPerformed
-     public void jButtonAction(java.awt.event.ActionEvent evt) {
-    jButton1ActionPerformed(evt);
-}
+    public void jButtonAction(java.awt.event.ActionEvent evt) {
+        jButton1ActionPerformed(evt);
+    }
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         jButtonAction(evt);
         int id = Integer.parseInt(idField.getText());
         try {
-            customer.PayInExitStation(id);
-            customer.translateDataToTotalCar(id);
-            customer.translateSpotDataToFreeSpots(id);
-            customer.deleteUSerDataById(id);       
+            setTotalTime("parkedcar", id);
+            double totalPaymentOfParking = calculateTotalPayment(id);
+            setPayment("parkedcar", totalPaymentOfParking, id);
+            translateDataToTotalCar(id);
+            translateSpotDataToFreeSpots(id);
+            deleteUSerDataById(id);
         } catch (SQLException ex) {
             Logger.getLogger(ExitStation.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -239,10 +244,7 @@ public class ExitStation extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
                 new ExitStation().setVisible(true);
-                
-                
             }
         });
     }

@@ -1,10 +1,12 @@
 package View;
 
-import Controller.Admin;
+import Controller.*;
 import Controller.Customer;
-import Controller.SpotsModification;
+import static Controller.SpotsModification.deleteTokenSpot;
+import static Controller.SpotsModification.setNewSpot;
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import static Controller.SpotsModification.makeSpotFree;
 
 public class UserModification extends javax.swing.JFrame {
 
@@ -15,8 +17,7 @@ public class UserModification extends javax.swing.JFrame {
     }
     Admin admin = new Admin();
     Customer customer = new Customer();
-    SpotsModification spotsModification = new SpotsModification();
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -227,7 +228,6 @@ public class UserModification extends javax.swing.JFrame {
             String plateNumber = text;
             int id = Integer.parseInt(jTextField1.getText());
             admin.updatePlateNumberByID(plateNumber, id);
-            System.out.println("Done");
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "Plate Number Updated Successfully");
         } else if (index == 1) {
@@ -235,7 +235,9 @@ public class UserModification extends javax.swing.JFrame {
             boolean exist = customer.isExistInDatabase(spot, "spot", "freespots");
             int id = Integer.parseInt(jTextField1.getText());
             if (exist == true) {
-                spotsModification.updateSpotNumberByID(id, spot);
+                makeSpotFree(id);
+                setNewSpot(spot,id);
+                deleteTokenSpot(spot);
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "Spot Number Updated Successfully");
             } else {

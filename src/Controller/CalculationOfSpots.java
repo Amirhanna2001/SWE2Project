@@ -1,41 +1,49 @@
 package Controller;
 
+import static Model.SQLQueries.executeSelectQueryWithoutCondition;
 import java.sql.*;
-import static Model.SQLSelectQuerys.executeSelectQueryWithoutCondition;
 
 public class CalculationOfSpots {
     
-    public int calculateFreeSpots() {
+    public static int calculateSpots(ResultSet resultSet){
+        int numberOfSpots = 0;
+        try {
+            while (resultSet.next()) {
+                numberOfSpots++;
+            }
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return numberOfSpots;
+    }
+    
+    public static int calculateFreeSpots() {
         int numberOfFreeSpots = 0;
         try {
-            ResultSet resultSet;
+            ResultSet resultSet; 
             resultSet = executeSelectQueryWithoutCondition("*", "freespots");
-            while (resultSet.next()) {
-                numberOfFreeSpots++;
-            }
+            numberOfFreeSpots = calculateSpots(resultSet);
             resultSet.close();
-        } catch (SQLException exception) {
+        }catch (SQLException exception) {
             System.out.println(exception);
         }
         return numberOfFreeSpots;
     }
     
-    public int calculateBusySpots() {
+    public static int calculateBusySpots() {
         int numberOfBusySpots = 0;
         try {
             ResultSet resultSet;
             resultSet = executeSelectQueryWithoutCondition("id", "parkedcar");
-            while (resultSet.next()) {
-                numberOfBusySpots++;
-            }
+            numberOfBusySpots = calculateSpots(resultSet);
             resultSet.close();
-        } catch (SQLException exception) {
+        }catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
         return numberOfBusySpots;
     }
     
-     public int calculateTotalSpots() {
+     public static int calculateTotalSpots() {
         return calculateBusySpots() + calculateFreeSpots();
     }  
 }

@@ -1,88 +1,47 @@
 package Controller;
 
+import static Controller.Customer.getNextID;
+import static Controller.SpotsModification.getRightSpot;
 import java.sql.*;
 import static Controller.TimeManagment.*;
-import Model.Geter;
-import static Model.Payment.setPayment;
-import static Model.SQLDeleteQuerys.executeDeleteQuery;
-import static Model.SQLSelectQuerys.executeSelectQueryWithCondition;
-import static Model.SQLSelectQuerys.executeSelectQueryWithoutCondition;
-import static Model.SQLUpdateQuerys.executeInsertQuery;
+import static Model.SQLQueries.*;
 
 public abstract class ParkingMangement {
 
-    public void PayInExitStation(int id) throws SQLException {
-        setEndTime("parkedcar", id);
-        setTotalTime("parkedcar", id);
-        double totalPaymentOfParking = calculateTotalPayment(id);
-        setPayment("parkedcar", totalPaymentOfParking, id);
+    public static void deleteUSerDataById(int id) throws SQLException {
+        executeDeleteQuery("parkedcar", "id = "+id);
     }
 
-    public void deleteUSerDataById(int id) throws SQLException {
-        executeDeleteQuery("parkedcar", "id =" + id);
-    }
-
-    public void addItemToDataBase(String plateNumber) {
-        int id = Geter.getID();
-        int spot = Geter.getRightSpot();
-        executeInsertQuery("parkedcar (id,spot,platenum)", id + "," + spot + ",'" + plateNumber + "'");
+    public static void addItemToDataBase(String plateNumber) {
+        int id = getNextID();
+        int spot = getRightSpot();
+        executeInsertQuery("parkedcar (id,spot,platenum)", id+","+spot+",'"+plateNumber+"'");
         setStartTime("parkedcar", id);
     }
 
-    public void translateSpotDataToFreeSpots(int id) throws SQLException {
-        ResultSet resultSetFromParkedCar = executeSelectQueryWithCondition("spot", "parkedcar", "id =" + id);
+    public static void translateSpotDataToFreeSpots(int id) throws SQLException {
+        ResultSet resultSetFromParkedCar = executeSelectQueryWithCondition("spot", "parkedcar", "id = "+id);
         int spot = resultSetFromParkedCar.getInt("spot");
-        executeInsertQuery("freespots", spot + "");
+        executeInsertQuery("freespots", spot+"");
     }
 
-    public void translateDataToTotalCar(int id) throws SQLException {
-        int spot;
-        String plateNumber;
-        double totalPaymentOfParking;
-        Time startTime, endTime, totalTime;
-        ResultSet resultSetFromParkedCar = executeSelectQueryWithCondition("*", "parkedcar", "id =" + id);
-        spot = resultSetFromParkedCar.getInt("spot");
-        plateNumber = resultSetFromParkedCar.getString("platenum");
-        totalPaymentOfParking = resultSetFromParkedCar.getFloat("payment");
-        startTime = resultSetFromParkedCar.getTime("starttime");
-        endTime = resultSetFromParkedCar.getTime("endtime");
-        totalTime = resultSetFromParkedCar.getTime("totalTime");
+    public static void translateDataToTotalCar(int id) throws SQLException {
+        ResultSet resultSet = executeSelectQueryWithCondition("*", "parkedcar", "id = " + id);
+        int spot = resultSet.getInt("spot");
+        String plateNumber = resultSet.getString("platenum");
+        double totalPaymentOfParking = resultSet.getFloat("payment");
+        Time startTime = resultSet.getTime("starttime");
+        Time endTime = resultSet.getTime("endtime");
+        Time totalTime = resultSet.getTime("totalTime");
         executeInsertQuery("totalcars", id + "," + spot + ",'" + startTime + "','" + endTime + "','" + totalTime + "','" +
                 plateNumber + "','" + totalPaymentOfParking + "'");
     }
-
-    public double calculateTotalPayment(int id) {
-        Time totalTimeOfParking = getTotalTime(id);
-        double totalTimeInDecimal = ((totalTimeOfParking.getSeconds() / 3600.0) + (totalTimeOfParking.getMinutes() / 60.0) + (totalTimeOfParking.getHours()));
-        double totalPaymentValue =  (totalTimeInDecimal * 5.0);
-        return totalPaymentValue;
-    }
     
-        public static int getMaximumSpot(ResultSet resultSet) throws SQLException {
-        int spot;
-        int maxSpotNmber = 0;
-        while (resultSet.next()) {
-            spot = resultSet.getInt("spot");
-            if (maxSpotNmber < spot) {
-                maxSpotNmber = spot;
-            }
-        }
-        return maxSpotNmber;
-    }
-
     public boolean isExistInDatabase(int value,String column,String table) {
-        int dataBaseValue = 0;
         boolean check = false;
         try {
             ResultSet resultSet = executeSelectQueryWithoutCondition(column, table);
-            while (resultSet.next()) {
-                dataBaseValue = resultSet.getInt(column);
-                System.out.println(value);
-                if (dataBaseValue == value) {
-                    check = true;
-                    break;
-                }
-            }
+            check = checkIntegerIsExist(resultSet,value ,column);
             resultSet.close();
         } catch (SQLException expression) {
             System.out.println(expression);
@@ -90,22 +49,50 @@ public abstract class ParkingMangement {
         return check;
     }
 
-    public boolean isExistPlateNumber(String plateNumber) {
-        String dataBasevalue;
-        boolean check = false;
+    public boolean checkIntegerIsExist(ResultSet rs, int value , String column){
+        int dataBaseValue = 0;
+        boolean check = false;    
         try {
-            ResultSet resultSet = executeSelectQueryWithoutCondition("platenum", "parkedcar");
-            while (resultSet.next()) {
-                dataBasevalue = resultSet.getString("platenum");
-                if (dataBasevalue.equals(plateNumber)) {
+            while (rs.next()) {
+                dataBaseValue = rs.getInt(column);
+                if (dataBaseValue == value) {
                     check = true;
                     break;
                 }
             }
+        } catch (SQLException expression) {
+            System.out.println(expression);
+        }
+        return check ;
+    }
+   
+    public boolean isExistPlateNumber(String plateNumber) {
+        boolean check =false;
+        try {
+            ResultSet resultSet = executeSelectQueryWithoutCondition("platenum", "parkedcar");
+            check = checkStringIsExist(resultSet ,plateNumber);
             resultSet.close();
         } catch (SQLException exception) {
             System.out.println(exception);
         }
         return check;
+    }
+    
+    public boolean checkStringIsExist(ResultSet rs,String plateNumber){
+        String dataBasevalue  ;
+        boolean check = false;    
+        try {
+            while (rs.next()) {
+                dataBasevalue = rs.getString("platenum");
+                System.out.println(dataBasevalue);
+                if (dataBasevalue.equals(plateNumber)) {
+                    check = true;
+                    break;
+                }
+            }
+        } catch (SQLException expression) {
+            System.out.println(expression);
+        }
+        return check ;
     }
 }

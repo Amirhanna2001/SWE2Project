@@ -2,50 +2,39 @@ package Controller;
 
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
-import static Model.Connectsql.setConnection;
-import static Model.SQLDeleteQuerys.*;
-import static Model.SQLUpdateQuerys.*;
+import static Model.SQLQueries.*;
 
 public class Admin extends ParkingMangement {
 
-    public void updatePlateNumberByID(String plateNumber, int id) {
-        try {
-            executeUpdateQuerys("parkedcar set platenum", plateNumber, id);
-        } catch (Exception exception) {
-            System.out.println(exception);
-        }
+    public void updatePlateNumberByID(String newPlateNumber, int id) {
+        executeUpdateQuerys("parkedcar set platenum", newPlateNumber, id);
     }
 
     public void deleteUserDataBySpot(int spot) {
-        try {
-            executeInsertQuery("freespots", spot + "");
-            executeDeleteQuery("parkedcar", "spot = " + spot);
-        } catch (Exception exception) {
-            System.out.println(exception);
-        }
+        executeDeleteQuery("parkedcar", "spot = " + spot);
+    }
+    
+    public static void retakeSpot(int spot){
+        executeInsertQuery("freespots", spot + "");
     }
 
     public void viewParkedCarsReport(DefaultTableModel defaultTableModel) {
         try {
-            Connection connectToServer = setConnection();
-            Statement statement = connectToServer.createStatement();
-            ResultSet resultSetFromParkedCar = statement.executeQuery("select * from parkedcar");
+            ResultSet resultSetFromParkedCar = executeSelectQueryWithoutCondition("*", "parkedcar");
             while (resultSetFromParkedCar.next()) {
                 defaultTableModel.addRow(new Object[]{resultSetFromParkedCar.getInt("id"), resultSetFromParkedCar.getInt("spot"),
-                    resultSetFromParkedCar.getTime("starttime"), resultSetFromParkedCar.getString("platenum")});
+                resultSetFromParkedCar.getTime("starttime"), resultSetFromParkedCar.getString("platenum")});
             }
         } catch (SQLException exception) {
             System.out.println(exception);
         }
     }
 
-    public void viewShiftsReportWithPayment(DefaultTableModel dtm) {
+    public void viewShiftsReportWithPayment(DefaultTableModel defaultTableModel) {
         try {
-            Connection connectToServer = setConnection();
-            Statement statement = connectToServer.createStatement();
-            ResultSet resultSetFromTotalCars = statement.executeQuery("select * from totalcars");
+            ResultSet resultSetFromTotalCars =executeSelectQueryWithoutCondition("*", "totalcars");
             while (resultSetFromTotalCars.next()) {
-                dtm.addRow(new Object[]{resultSetFromTotalCars.getInt("id"), resultSetFromTotalCars.getInt("spot"),
+                defaultTableModel.addRow(new Object[]{resultSetFromTotalCars.getInt("id"), resultSetFromTotalCars.getInt("spot"),
                     resultSetFromTotalCars.getTime("starttime"), resultSetFromTotalCars.getTime("endtime"), 
                     resultSetFromTotalCars.getTime("totaltime"), resultSetFromTotalCars.getString("platenum"),
                     resultSetFromTotalCars.getFloat("payment")});
@@ -54,5 +43,4 @@ public class Admin extends ParkingMangement {
             System.out.println(exception);
         }
     }
-
 }
