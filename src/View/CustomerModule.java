@@ -1,13 +1,13 @@
 package View;
 
 import Controller.Customer;
-import Model.SQLUpdateQuerys;
 import static Controller.TimeManagment.GetCurrentTime;
+import Model.SQLQueries;
 
 public class CustomerModule extends javax.swing.JFrame {
 
     public static String plateNumber;
-    SQLUpdateQuerys sqlUpdateQuery=new SQLUpdateQuerys();
+    SQLQueries sqlUpdateQuery=new SQLQueries();
     boolean isPlateNumberExist;
     Customer customer=new Customer();
 
@@ -23,7 +23,6 @@ public class CustomerModule extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        parkingApplication1 = new Model.ParkingApplication();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -211,6 +210,7 @@ public class CustomerModule extends javax.swing.JFrame {
 
        setPlateNumber();
         isPlateNumberExist = customer.isExistPlateNumber(plateNumber);
+        System.out.println(isPlateNumberExist);
         ModificationState(isPlateNumberExist);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -277,7 +277,6 @@ public class CustomerModule extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField3;
-    private Model.ParkingApplication parkingApplication1;
     public static javax.swing.JTextField plateNumberField;
     // End of variables declaration//GEN-END:variables
 }

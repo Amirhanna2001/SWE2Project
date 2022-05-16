@@ -1,14 +1,15 @@
 package View;
 
 import Controller.Customer;
+import static Controller.Customer.getNextID;
 import Controller.SpotsModification;
 import static Controller.SpotsModification.deleteFirstFreeSpot;
+import static Controller.SpotsModification.getRightSpot;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import Controller.TimeManagment;
 import static Controller.TimeManagment.GetCurrentTime;
-import Model.Geter;
-import static Model.Geter.getRightSpot;
+
 
 public class UserAddition extends javax.swing.JFrame {
 
@@ -16,7 +17,6 @@ public class UserAddition extends javax.swing.JFrame {
         initComponents();
     }
 
-    Geter geter = new Geter();
     TimeManagment timeManagment = new TimeManagment();
     Customer customer = new Customer();
     SpotsModification spotsModification = new SpotsModification();
@@ -207,7 +207,7 @@ public class UserAddition extends javax.swing.JFrame {
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "The Plate Number You Entered is already Exist\n Please Enter another Plate Number");
         } else {
-            int id = Geter.getID();
+            int id = getNextID();
             jTextField1.setText(id + "");
             customer.addItemToDataBase(plateNumber);
             deleteFirstFreeSpot();

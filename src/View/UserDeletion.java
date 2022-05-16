@@ -139,15 +139,16 @@ public class UserDeletion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String text = jTextField1.getText();
+
         int index ;
         index=jComboBox1.getSelectedIndex();
         
         if(index==0)
         {
+            String id = jTextField1.getText();
             try {
-                customer.translateSpotDataToFreeSpots(Integer.parseInt(text));
-                customer.deleteUSerDataById(Integer.parseInt(text));
+                customer.translateSpotDataToFreeSpots(Integer.parseInt(id));
+                customer.deleteUSerDataById(Integer.parseInt(id));
                 Component frame = null;
                 JOptionPane.showMessageDialog(frame, "User Removed Successfully");
             } catch (SQLException exception) {
@@ -156,7 +157,9 @@ public class UserDeletion extends javax.swing.JFrame {
         }
         else if (index==1)
         {
-            admin.deleteUserDataBySpot(Integer.parseInt(text));
+            String spot = jTextField1.getText();
+            admin.retakeSpot(Integer.parseInt(spot));
+            admin.deleteUserDataBySpot(Integer.parseInt(spot));
             Component frame = null;
             JOptionPane.showMessageDialog(frame, "User Removed Successfully");
         }
