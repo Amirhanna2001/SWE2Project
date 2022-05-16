@@ -10,7 +10,8 @@ public class SQLQueries {
 
     static Connection connectToServer;
     static Statement statement;
-
+    
+    
     public static void executeDeleteQuery(String tableName, String condition) {
         try {
             connectToServer = setConnection();
