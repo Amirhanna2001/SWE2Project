@@ -2,6 +2,7 @@ package View;
 
 import Controller.Customer;
 import Controller.Admin;
+import Controller.ParkingMangement;
 import java.awt.Component;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -15,7 +16,7 @@ public class UserDeletion extends javax.swing.JFrame {
 
     }
     Admin admin =new Admin();
-    Customer customer=new Customer();
+    ParkingMangement customer=new Customer();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
