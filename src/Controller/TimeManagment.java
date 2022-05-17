@@ -1,13 +1,14 @@
 package Controller;
+import static Model.Connectsql.getConnection;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import static Model.Connectsql.setConnection;
 import static Model.SQLQueries.*;
 
 public class TimeManagment {
 
+    
     public static Time getTotalTime(int id) {
         Time totalTime = null;
         try {
@@ -32,7 +33,7 @@ public class TimeManagment {
     }
 
     public static void setTotalTime(String TableName, long id) {
-        Connection connectToServer = setConnection();
+        Connection connectToServer = getConnection();
         try {
             Statement statement;
             statement = connectToServer.createStatement();
