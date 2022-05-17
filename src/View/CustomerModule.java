@@ -210,9 +210,8 @@ public class CustomerModule extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-       setPlateNumber();
+        setPlateNumber();
         isPlateNumberExist = customer.isExistPlateNumber(plateNumber);
-        System.out.println(isPlateNumberExist);
         ModificationState(isPlateNumberExist);
     }//GEN-LAST:event_jButton1ActionPerformed
 
