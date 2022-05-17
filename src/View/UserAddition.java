@@ -2,6 +2,7 @@ package View;
 
 import Controller.Customer;
 import static Controller.Customer.getNextID;
+import Controller.ParkingMangement;
 import Controller.SpotsModification;
 import static Controller.SpotsModification.deleteFirstFreeSpot;
 import static Controller.SpotsModification.getRightSpot;
@@ -18,7 +19,7 @@ public class UserAddition extends javax.swing.JFrame {
     }
 
     TimeManagment timeManagment = new TimeManagment();
-    Customer customer = new Customer();
+    ParkingMangement customer = new Customer();
     SpotsModification spotsModification = new SpotsModification();
 
     @SuppressWarnings("unchecked")

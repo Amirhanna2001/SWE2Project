@@ -12,8 +12,7 @@ import Model.SQLQueries;
 public class EntryStation extends javax.swing.JFrame {
 
     private Component frame;
-    Customer customer = new Customer();
-    Admin admin = new Admin();
+    ParkingMangement customer = new Customer();
     CalculationOfSpots calculationOfSpots = new CalculationOfSpots();
     SpotsModification spotsModification = new SpotsModification();
     SQLQueries sql = new SQLQueries();
@@ -167,7 +166,7 @@ public class EntryStation extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int id = getNextID();
         String plateNumber = getPlateNumber();
-        customer.addItemToDataBase(plateNumber);
+        Customer.addItemToDataBase(plateNumber);
         deleteFirstFreeSpot();
         JOptionPane.showMessageDialog(frame, "Book has been succesfull\nyour id: " + id);
         new HomePage().setVisible(true);

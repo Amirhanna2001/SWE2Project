@@ -13,10 +13,8 @@ public abstract class ParkingMangement {
     }
 
     public static void addItemToDataBase(String plateNumber) {
-        int id = getNextID();
-        int spot = getRightSpot();
-        executeInsertQuery("parkedcar (id,spot,platenum)", id+","+spot+",'"+plateNumber+"'");
-        setStartTime("parkedcar", id);
+        executeInsertQuery("parkedcar (id,spot,platenum)", getNextID()+","+getRightSpot()+",'"+plateNumber+"'");
+        setStartTime("parkedcar", getNextID());
     }
 
     public static void translateSpotDataToFreeSpots(int id) throws SQLException {

@@ -1,6 +1,8 @@
 package View;
 
+import Controller.CashPayment;
 import Controller.Customer;
+import Controller.ParkingMangement;
 import static Controller.TimeManagment.GetCurrentTime;
 import Model.SQLQueries;
 
@@ -9,7 +11,7 @@ public class CustomerModule extends javax.swing.JFrame {
     public static String plateNumber;
     SQLQueries sqlUpdateQuery=new SQLQueries();
     boolean isPlateNumberExist;
-    Customer customer=new Customer();
+    ParkingMangement customer=new Customer();
 
 
     public CustomerModule() {
@@ -242,7 +244,7 @@ public class CustomerModule extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
-        new ExitStation().setVisible(true);
+        new ExitStation(new CashPayment()).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_exitActionPerformed
 

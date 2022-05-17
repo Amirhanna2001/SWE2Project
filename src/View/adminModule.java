@@ -2,12 +2,13 @@ package View;
 
 import Controller.CalculationOfSpots;
 import Controller.Admin;
+import Controller.ParkingMangement;
 import Controller.SpotsModification;
 
 public class AdminModule extends javax.swing.JFrame {
 
     CalculationOfSpots calculationOfSpots = new CalculationOfSpots();
-    Admin admin = new Admin();
+    ParkingMangement admin = new Admin();
     SpotsModification spotsModification = new SpotsModification();
 
     int freeSpots, busySpots, totalSpots;

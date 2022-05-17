@@ -16,7 +16,7 @@ public class UserModification extends javax.swing.JFrame {
 
     }
     Admin admin = new Admin();
-    Customer customer = new Customer();
+    ParkingMangement customer = new Customer();
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
