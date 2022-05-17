@@ -22,9 +22,10 @@ public class TimeManagment {
         return totalTime;
     }
 
-    public static void setStartTime(String TableName, long id) {
+    public static String getStartTime() {
         String time = GetCurrentTime();
-        executeUpdateQuerys(TableName + " set startTime", time, id);
+        //executeUpdateQuerys(TableName + " set starttime", time, id);
+        return time;
     }
 
     public static void setEndTime(String TableName, long id) {
@@ -40,8 +41,6 @@ public class TimeManagment {
             setEndTime(TableName,id);
             statement.executeUpdate("UPDATE "+ TableName+ " SET `totaltime`=(SELECT TIMEDIFF(endtime,starttime)) WHERE id="
                     + id + "");
-            statement.close();
-            connectToServer.close();
         } catch (SQLException exceptionError) {
             System.out.println(exceptionError);
         }
